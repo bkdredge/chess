@@ -1,6 +1,9 @@
 package chess;
 
 public class ChessMoveImpl implements ChessMove{
+    public ChessMoveImpl(ChessPositionImpl startPosition, ChessPositionImpl endPosition) {
+    }
+
     @Override
     public ChessPosition getStartPosition() {
         return null;
