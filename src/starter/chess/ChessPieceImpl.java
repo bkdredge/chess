@@ -11,8 +11,20 @@ public class ChessPieceImpl implements ChessPiece {
     @Override public ChessGame.TeamColor getTeamColor() {return teamColor;}
     @Override public PieceType getPieceType() {return pieceType;}
     @Override public Collection<ChessMoveImpl> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+        /*
+        ChessBoardImpl thisBoard=(ChessBoardImpl) board;
+        thisBoard.updateMoves();
+
+         */
         return pieceMoves;
     }
+    /*
+    void removeMoves() {pieceMoves.clear();}
+
+    void addMove(ChessMoveImpl chessMoveInput) {
+        pieceMoves.add(chessMoveInput);
+    }
+      */
     public String toStringPiece() {
         StringBuilder out=new StringBuilder();
         if(teamColor==ChessGame.TeamColor.WHITE) {out.append("(WHITE)");}

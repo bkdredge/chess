@@ -18,18 +18,10 @@ public class ChessBoardImpl implements ChessBoard{
             System.out.println("Cannot add. Position is occupied.");
         }
     }
-    @Override public ChessPiece getPiece(ChessPosition position) {
+    @Override public ChessPieceImpl getPiece(ChessPosition position) {
         return board[position.getColumn()-1][position.getRow()-1].getPieceOnPosition();
     }
     @Override public void resetBoard() {
-        /*
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                board[i][j].setPieceOnPosition(null);
-            }
-        }
-
-         */
         //TEAM WHITE
         addPiece(board[0][0],new ChessPieceImpl(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.ROOK));
         addPiece(board[1][0],new ChessPieceImpl(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.KNIGHT));
@@ -55,5 +47,65 @@ public class ChessBoardImpl implements ChessBoard{
             addPiece(board[i][6],new ChessPieceImpl(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN));
         }
     }
+    /*
+    public void updateMoves() {
+        for (int i=0;i<8;i++){
+            for (int j=0;j<8;j++){
+                if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.PAWN) {
+                    updatePawn(board[i][j]);
+                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.KNIGHT) {
+                    updateKnight(board[i][j]);
+                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.BISHOP) {
+                    updateBishop(board[i][j]);
+                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.ROOK) {
+                    updateRook(board[i][j]);
+                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.KING) {
+                    updateKing(board[i][j]);
+                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.QUEEN) {
+                    updateQueen(board[i][j]);
+                } else if (board[i][j].getPieceOnPosition().getPieceType()==null) {
+                    System.out.println("NOPE");
+                }
+            }
+        }
+    }
+
+    private void updatePawn(ChessPositionImpl chessPosition) {
+        System.out.println("MADE IT");
+    }
+    private void updateKnight(ChessPositionImpl chessPosition) {
+        System.out.println("MADE IT");
+    }
+    private void updateBishop(ChessPositionImpl chessPosition) {
+        System.out.println("MADE IT");
+    }
+    private void updateRook(ChessPositionImpl chessPosition) {
+        for (int i=0;i<8;i++){
+            while(getPiece(board[chessPosition.getColumn()][chessPosition.getRow()+i])==null && chessPosition.getRow()+i<8) {
+                getPiece(chessPosition).addMove(new ChessMoveImpl(chessPosition,
+                        board[chessPosition.getColumn()][chessPosition.getRow()+i],null));
+            }
+            while(getPiece(board[chessPosition.getColumn()][chessPosition.getRow()-i])==null && chessPosition.getRow()-i>-1) {
+                getPiece(chessPosition).addMove(new ChessMoveImpl(chessPosition,
+                        board[chessPosition.getColumn()][chessPosition.getRow()-i],null));
+            }
+            while(getPiece(board[chessPosition.getColumn()+i][chessPosition.getRow()])==null && chessPosition.getColumn()+i<8) {
+                getPiece(chessPosition).addMove(new ChessMoveImpl(chessPosition,
+                        board[chessPosition.getColumn()+i][chessPosition.getRow()],null));
+            }
+            while(getPiece(board[chessPosition.getColumn()-i][chessPosition.getRow()])==null && chessPosition.getColumn()-i>-1) {
+                getPiece(chessPosition).addMove(new ChessMoveImpl(chessPosition,
+                        board[chessPosition.getColumn()-i][chessPosition.getRow()],null));
+            }
+        }
+    }
+    private void updateQueen(ChessPositionImpl chessPosition) {
+        System.out.println("MADE IT");
+    }
+    private void updateKing(ChessPositionImpl chessPosition) {
+        System.out.println("MADE IT");
+    }
+
+     */
     //FIXME Will add a toString
 }
