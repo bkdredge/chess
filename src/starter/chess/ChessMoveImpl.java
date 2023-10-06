@@ -1,21 +1,16 @@
 package chess;
 
 public class ChessMoveImpl implements ChessMove{
-    public ChessMoveImpl(ChessPositionImpl startPosition, ChessPositionImpl endPosition) {
+    private ChessPositionImpl startPosition,endPosition;
+    private ChessPiece.PieceType promotionPiece=null;
+    public ChessMoveImpl(ChessPositionImpl startPositionInput, ChessPositionImpl endPositionInput,
+                         ChessPiece.PieceType promotionInput) {
+        startPosition=startPositionInput;
+        endPosition=endPositionInput;
+        promotionPiece=promotionInput;
     }
-
-    @Override
-    public ChessPosition getStartPosition() {
-        return null;
-    }
-
-    @Override
-    public ChessPosition getEndPosition() {
-        return null;
-    }
-
-    @Override
-    public ChessPiece.PieceType getPromotionPiece() {
-        return null;
-    }
+    @Override public ChessPosition getStartPosition() {return startPosition;}
+    @Override public ChessPosition getEndPosition() {return endPosition;}
+    @Override public ChessPiece.PieceType getPromotionPiece() {return promotionPiece;}
+    //FIXME Will add a toString
 }

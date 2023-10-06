@@ -19,15 +19,15 @@ public class TestFactory {
     }
 
     public static ChessPiece getNewPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type){
-        return new ChessPieceImpl();
+        return new ChessPieceImpl(pieceColor,type);
     }
 
     public static ChessPosition getNewPosition(Integer row, Integer col){
-        return new ChessPositionImpl();
+        return new ChessPositionImpl(row,col);
     }
 
     public static ChessMove getNewMove(ChessPosition startPosition, ChessPosition endPosition, ChessPiece.PieceType promotionPiece){
-        return new ChessMoveImpl((ChessPositionImpl) startPosition, (ChessPositionImpl) endPosition);
+        return new ChessMoveImpl((ChessPositionImpl) startPosition, (ChessPositionImpl) endPosition, promotionPiece);
     }
     //------------------------------------------------------------------------------------------------------------------
 
