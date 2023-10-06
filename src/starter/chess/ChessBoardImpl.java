@@ -13,7 +13,7 @@ public class ChessBoardImpl implements ChessBoard{
     }
     @Override public void addPiece(ChessPosition position, ChessPiece piece) {
         if(board[position.getColumn()-1][position.getRow()-1].getPieceOnPosition()==null) {
-            board[position.getColumn()-1][position.getRow()-1].setPieceOnPosition(piece);
+            board[position.getColumn()-1][position.getRow()-1].setPieceOnPosition((ChessPieceImpl)piece);
         } else {
             System.out.println("Cannot add. Position is occupied.");
         }

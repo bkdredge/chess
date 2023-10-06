@@ -32,7 +32,8 @@ public interface ChessPiece {
     /**
      * Calculates all the positions a chess piece can move to
      * Does not take into account moves that are illegal due to leaving the king in danger
+     *
      * @return Collection of valid moves
      */
-    Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition);
+    Collection<ChessMoveImpl> pieceMoves(ChessBoard board, ChessPosition myPosition);
 }
