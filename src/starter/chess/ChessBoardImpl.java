@@ -10,6 +10,8 @@ public class ChessBoardImpl implements ChessBoard{
                 board[i][j] = new ChessPositionImpl(j+1,i+1);
             }
         }
+        resetBoard();
+        //System.out.println(toStringBoard());
     }
     @Override public void addPiece(ChessPosition position, ChessPiece piece) {
         if(board[position.getColumn()-1][position.getRow()-1].getPieceOnPosition()==null) {
@@ -107,5 +109,15 @@ public class ChessBoardImpl implements ChessBoard{
     }
 
      */
-    //FIXME Will add a toString
+    public String toStringBoard() {
+        StringBuilder out=new StringBuilder();
+        for(int i=0;i<8;i++) {
+            for(int j=0;j<8;j++) {
+                if(board[i][j].getPieceOnPosition()!=null) {
+                    out.append(board[i][j].getPieceOnPosition().toStringPiece() + board[i][j].toStringPosition() + "\n");
+                }
+            }
+        }
+        return out.toString();
+    }
 }
