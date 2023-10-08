@@ -10,7 +10,7 @@ public class ChessBoardImpl implements ChessBoard{
                 board[i][j] = new ChessPositionImpl(j+1,i+1);
             }
         }
-        resetBoard();
+        //resetBoard();
         //System.out.println(toStringBoard());
     }
     @Override public void addPiece(ChessPosition position, ChessPiece piece) {
@@ -22,6 +22,11 @@ public class ChessBoardImpl implements ChessBoard{
     }
     @Override public ChessPieceImpl getPiece(ChessPosition position) {
         return board[position.getColumn()-1][position.getRow()-1].getPieceOnPosition();
+    }
+    public void movePiece(ChessPosition startPosition, ChessPosition endPosition) {
+        ChessPieceImpl piece=getPiece(startPosition);
+        addPiece(endPosition,piece);
+        board[startPosition.getColumn()-1][startPosition.getRow()-1].setPieceOnPosition(null);
     }
     @Override public void resetBoard() {
         //TEAM WHITE
@@ -49,7 +54,7 @@ public class ChessBoardImpl implements ChessBoard{
             addPiece(board[i][6],new ChessPieceImpl(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN));
         }
     }
-    /*
+
     public void updateMoves() {
         for (int i=0;i<8;i++){
             for (int j=0;j<8;j++){
@@ -108,13 +113,12 @@ public class ChessBoardImpl implements ChessBoard{
         System.out.println("MADE IT");
     }
 
-     */
     public String toStringBoard() {
         StringBuilder out=new StringBuilder();
         for(int i=0;i<8;i++) {
             for(int j=0;j<8;j++) {
                 if(board[i][j].getPieceOnPosition()!=null) {
-                    out.append(board[i][j].getPieceOnPosition().toStringPiece() + board[i][j].toStringPosition() + "\n");
+                    out.append(board[i][j].toStringPosition() + "\n");
                 }
             }
         }

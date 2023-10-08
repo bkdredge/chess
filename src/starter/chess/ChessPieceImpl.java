@@ -28,14 +28,18 @@ public class ChessPieceImpl implements ChessPiece {
     public String toStringPiece() {
         StringBuilder out=new StringBuilder();
         if(teamColor==ChessGame.TeamColor.WHITE) {out.append("(WHITE)");}
-        else if (teamColor==ChessGame.TeamColor.WHITE) {out.append("(BLACK)");}
+        else if (teamColor==ChessGame.TeamColor.BLACK) {out.append("(BLACK)");}
         else {out.append("(UNKNOWN)");}
         if(pieceType==PieceType.PAWN) {out.append("PAWN");}
         else if(pieceType==PieceType.ROOK) {out.append("ROOK");}
-        else if(pieceType==PieceType.KNIGHT) {out.append("KNIGHT");}
-        else if(pieceType==PieceType.BISHOP) {out.append("BISHOP");}
+        else if(pieceType==PieceType.KNIGHT) {out.append("KNGT");}
+        else if(pieceType==PieceType.BISHOP) {out.append("BSHP");}
         else if(pieceType==PieceType.KING) {out.append("KING");}
-        else if(pieceType==PieceType.QUEEN) {out.append("QUEEN");}
+        else if(pieceType==PieceType.QUEEN) {out.append("QEEN");}
         return out.toString();
+    }
+
+    public void addMove(ChessMoveImpl chessMove) {
+        pieceMoves.add(chessMove);
     }
 }

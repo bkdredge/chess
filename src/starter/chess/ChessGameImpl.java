@@ -14,7 +14,7 @@ public class ChessGameImpl implements ChessGame{
         return null;
     }
     @Override public void makeMove(ChessMove move) throws InvalidMoveException {
-
+        board.movePiece(move.getStartPosition(), move.getEndPosition());
     }
     @Override public boolean isInCheck(TeamColor teamColor) {
         return false;
@@ -26,7 +26,7 @@ public class ChessGameImpl implements ChessGame{
         return false;
     }
     @Override public void setBoard(ChessBoard board) {
-
+        board.resetBoard();
     }
     @Override public ChessBoard getBoard() {
         return board;
