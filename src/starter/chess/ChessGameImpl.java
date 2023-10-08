@@ -11,10 +11,16 @@ public class ChessGameImpl implements ChessGame{
     }
     @Override public void setTeamTurn(TeamColor team) {currentTeam=team;}
     @Override public Collection<ChessMove> validMoves(ChessPosition startPosition) {
+        return validMoves((ChessPositionImpl) startPosition);
+    }
+    public Collection<ChessMove> validMoves(ChessPositionImpl startPosition) {
         return null;
     }
     @Override public void makeMove(ChessMove move) throws InvalidMoveException {
-        board.movePiece(move.getStartPosition(), move.getEndPosition());
+        makeMove((ChessMoveImpl) move);
+    }
+    public void makeMove(ChessMoveImpl move) throws InvalidMoveException {
+        board.movePiece(move);
     }
     @Override public boolean isInCheck(TeamColor teamColor) {
         return false;
@@ -26,6 +32,9 @@ public class ChessGameImpl implements ChessGame{
         return false;
     }
     @Override public void setBoard(ChessBoard board) {
+        setBoard((ChessBoardImpl) board);
+    }
+    public void setBoard(ChessBoardImpl board) {
         board.resetBoard();
     }
     @Override public ChessBoard getBoard() {

@@ -11,6 +11,9 @@ public class ChessPositionImpl implements ChessPosition{
     public void setRow(int rowInput) {row = rowInput;}
     public void setColumn(int columnInput) {column = columnInput;}
     public void setPieceOnPosition(ChessPieceImpl pieceOnPositionInput) {pieceOnPosition = pieceOnPositionInput;}
+    public void addMoveToPieceOnPosition(ChessMoveImpl move) {
+        pieceOnPosition.addMoveToPiece(move);
+    }
     public String toStringPosition() {
         StringBuilder out=new StringBuilder();
         if(pieceOnPosition!=null) {

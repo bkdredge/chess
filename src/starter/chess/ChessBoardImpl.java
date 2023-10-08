@@ -10,10 +10,12 @@ public class ChessBoardImpl implements ChessBoard{
                 board[i][j] = new ChessPositionImpl(j+1,i+1);
             }
         }
-        //resetBoard();
         //System.out.println(toStringBoard());
     }
     @Override public void addPiece(ChessPosition position, ChessPiece piece) {
+        addPiece((ChessPositionImpl) position, (ChessPieceImpl) piece);
+    }
+    public void addPiece(ChessPositionImpl position, ChessPieceImpl piece) {
         if(board[position.getColumn()-1][position.getRow()-1].getPieceOnPosition()==null) {
             board[position.getColumn()-1][position.getRow()-1].setPieceOnPosition((ChessPieceImpl)piece);
         } else {
@@ -23,10 +25,14 @@ public class ChessBoardImpl implements ChessBoard{
     @Override public ChessPieceImpl getPiece(ChessPosition position) {
         return board[position.getColumn()-1][position.getRow()-1].getPieceOnPosition();
     }
-    public void movePiece(ChessPosition startPosition, ChessPosition endPosition) {
-        ChessPieceImpl piece=getPiece(startPosition);
-        addPiece(endPosition,piece);
-        board[startPosition.getColumn()-1][startPosition.getRow()-1].setPieceOnPosition(null);
+    public void movePiece(ChessMoveImpl move) {
+        ChessPieceImpl piece=getPiece(move.getStartPosition());
+        addPiece(move.getEndPosition(),piece);
+        addPiece(move.getStartPosition(),null);
+        updateMoves();
+    }
+    public void addMoveToPieceOnBoard(ChessMoveImpl move) {
+        board[move.getStartPosition().getColumn()-1][move.getStartPosition().getRow()-1].addMoveToPieceOnPosition(move);
     }
     @Override public void resetBoard() {
         //TEAM WHITE
@@ -53,64 +59,64 @@ public class ChessBoardImpl implements ChessBoard{
         for (int i = 0; i < 8; i++){
             addPiece(board[i][6],new ChessPieceImpl(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN));
         }
+        updateMoves();
     }
 
     public void updateMoves() {
         for (int i=0;i<8;i++){
             for (int j=0;j<8;j++){
-                if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.PAWN) {
-                    updatePawn(board[i][j]);
-                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.KNIGHT) {
-                    updateKnight(board[i][j]);
-                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.BISHOP) {
-                    updateBishop(board[i][j]);
-                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.ROOK) {
-                    updateRook(board[i][j]);
-                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.KING) {
-                    updateKing(board[i][j]);
-                } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.QUEEN) {
-                    updateQueen(board[i][j]);
-                } else if (board[i][j].getPieceOnPosition().getPieceType()==null) {
-                    System.out.println("NOPE");
+                if(board[i][j].getPieceOnPosition()!=null) {
+                    if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.PAWN) {
+                        updatePawn(board[i][j]);
+                    } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.KNIGHT) {
+                        updateKnight(board[i][j]);
+                    } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.BISHOP) {
+                        updateBishop(board[i][j]);
+                    } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.ROOK) {
+                        updateRook(board[i][j]);
+                    } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.KING) {
+                        updateKing(board[i][j]);
+                    } else if (board[i][j].getPieceOnPosition().getPieceType()==ChessPiece.PieceType.QUEEN) {
+                        updateQueen(board[i][j]);
+                    } else if (board[i][j].getPieceOnPosition().getPieceType()==null) {
+                        System.out.println("NOPE");
+                    }
                 }
             }
         }
     }
 
     private void updatePawn(ChessPositionImpl chessPosition) {
-        System.out.println("MADE IT");
+        //System.out.println("PAWN UPDATED");
+        System.out.println(chessPosition.getPieceOnPosition().toStringPiece()+"-updated");
     }
     private void updateKnight(ChessPositionImpl chessPosition) {
-        System.out.println("MADE IT");
+        //System.out.println("KNIGHT UPDATED");
+        System.out.println(chessPosition.getPieceOnPosition().toStringPiece()+"-updated");
     }
     private void updateBishop(ChessPositionImpl chessPosition) {
-        System.out.println("MADE IT");
+        //System.out.println("BISHOP UPDATED");
+        System.out.println(chessPosition.getPieceOnPosition().toStringPiece()+"-updated");
     }
     private void updateRook(ChessPositionImpl chessPosition) {
-        for (int i=0;i<8;i++){
-            while(getPiece(board[chessPosition.getColumn()][chessPosition.getRow()+i])==null && chessPosition.getRow()+i<8) {
-                getPiece(chessPosition).addMove(new ChessMoveImpl(chessPosition,
-                        board[chessPosition.getColumn()][chessPosition.getRow()+i],null));
-            }
-            while(getPiece(board[chessPosition.getColumn()][chessPosition.getRow()-i])==null && chessPosition.getRow()-i>-1) {
-                getPiece(chessPosition).addMove(new ChessMoveImpl(chessPosition,
-                        board[chessPosition.getColumn()][chessPosition.getRow()-i],null));
-            }
-            while(getPiece(board[chessPosition.getColumn()+i][chessPosition.getRow()])==null && chessPosition.getColumn()+i<8) {
-                getPiece(chessPosition).addMove(new ChessMoveImpl(chessPosition,
-                        board[chessPosition.getColumn()+i][chessPosition.getRow()],null));
-            }
-            while(getPiece(board[chessPosition.getColumn()-i][chessPosition.getRow()])==null && chessPosition.getColumn()-i>-1) {
-                getPiece(chessPosition).addMove(new ChessMoveImpl(chessPosition,
-                        board[chessPosition.getColumn()-i][chessPosition.getRow()],null));
-            }
-        }
+        ChessGame.TeamColor thisColor = getPiece(chessPosition).getTeamColor();
+        int column = chessPosition.getColumn() - 1;
+        int row = chessPosition.getRow() - 1;
+
+        getPiece(chessPosition).pieceMoves(this,chessPosition);
+        //addMoveToPieceOnBoard(new ChessMoveImpl(board[column][row], board[column][3], null));
+        //System.out.println("ROOK UPDATED");
+        System.out.println(chessPosition.getPieceOnPosition().toStringPiece()+"-updated");
     }
+
+
     private void updateQueen(ChessPositionImpl chessPosition) {
-        System.out.println("MADE IT");
+        //System.out.println("QUEEN UPDATED");
+        System.out.println(chessPosition.getPieceOnPosition().toStringPiece()+"-updated");
     }
     private void updateKing(ChessPositionImpl chessPosition) {
-        System.out.println("MADE IT");
+        //System.out.println("KING UPDATED");
+        System.out.println(chessPosition.getPieceOnPosition().toStringPiece()+"-updated");
     }
 
     public String toStringBoard() {

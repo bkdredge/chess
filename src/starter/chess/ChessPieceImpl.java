@@ -11,11 +11,10 @@ public class ChessPieceImpl implements ChessPiece {
     @Override public ChessGame.TeamColor getTeamColor() {return teamColor;}
     @Override public PieceType getPieceType() {return pieceType;}
     @Override public Collection<ChessMoveImpl> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        /*
-        ChessBoardImpl thisBoard=(ChessBoardImpl) board;
-        thisBoard.updateMoves();
-
-         */
+        return pieceMoves((ChessBoardImpl) board, (ChessPositionImpl) myPosition);
+    }
+    public Collection<ChessMoveImpl> pieceMoves(ChessBoardImpl board, ChessPositionImpl myPosition) {
+        pieceMoves.add(new ChessMoveImpl(new ChessPositionImpl(0,0),new ChessPositionImpl(6,6),null));
         return pieceMoves;
     }
     /*
@@ -32,14 +31,21 @@ public class ChessPieceImpl implements ChessPiece {
         else {out.append("(UNKNOWN)");}
         if(pieceType==PieceType.PAWN) {out.append("PAWN");}
         else if(pieceType==PieceType.ROOK) {out.append("ROOK");}
-        else if(pieceType==PieceType.KNIGHT) {out.append("KNGT");}
-        else if(pieceType==PieceType.BISHOP) {out.append("BSHP");}
+        else if(pieceType==PieceType.KNIGHT) {out.append("KNIGHT");}
+        else if(pieceType==PieceType.BISHOP) {out.append("BISHOP");}
         else if(pieceType==PieceType.KING) {out.append("KING");}
-        else if(pieceType==PieceType.QUEEN) {out.append("QEEN");}
+        else if(pieceType==PieceType.QUEEN) {out.append("QUEEN");}
         return out.toString();
     }
-
-    public void addMove(ChessMoveImpl chessMove) {
+    public void addMoveToPiece(ChessMoveImpl chessMove) {
         pieceMoves.add(chessMove);
+    }
+    public String toStringAllMoves() {
+        StringBuilder out=new StringBuilder();
+        out.append(toStringPiece()+"-moves:\n");
+        for(ChessMoveImpl move:pieceMoves) {
+            move.toStringMove();
+        }
+        return out.toString();
     }
 }
