@@ -104,4 +104,10 @@ public class ChessGameImpl implements ChessGame{
     }
     @Override public void setBoard(ChessBoard board) {gameBoard=(ChessBoardImpl) board;}
     @Override public ChessBoard getBoard() {return gameBoard;}
+    @Override public String toString() {
+        return "ChessGameImpl{" +
+                "gameTeamColor=" + gameTeamColor +
+                ", gameBoard=" + gameBoard +
+                '}';
+    }
 }

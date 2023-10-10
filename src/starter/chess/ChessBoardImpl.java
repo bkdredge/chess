@@ -1,4 +1,7 @@
 package chess;
+
+import java.util.Arrays;
+
 public class ChessBoardImpl implements ChessBoard{
     private ChessPositionImpl[][] boardPositions=new ChessPositionImpl[8][8];;
     public ChessBoardImpl(){
@@ -55,5 +58,9 @@ public class ChessBoardImpl implements ChessBoard{
             addPiece(boardPositions[6][i],new ChessPieceImpl(ChessPiece.PieceType.PAWN, ChessGame.TeamColor.BLACK));
         }
     }
-
+    @Override public String toString() {
+        return "ChessBoardImpl{" +
+                "boardPositions=" + Arrays.toString(boardPositions) +
+                '}';
+    }
 }

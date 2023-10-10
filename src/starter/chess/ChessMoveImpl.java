@@ -24,4 +24,12 @@ public class ChessMoveImpl implements ChessMove{
         if(d.promotionPiece != this.promotionPiece) return false;
         return true;
     }
+    @Override
+    public String toString() {
+        return "ChessMoveImpl{" +
+                "startPosition=" + startPosition +
+                ", endPosition=" + endPosition +
+                ", promotionPiece=" + promotionPiece +
+                '}';
+    }
 }
