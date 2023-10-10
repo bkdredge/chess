@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class ChessPositionImpl implements ChessPosition{
     private int column=0, row=0;
-    private ChessPiece pieceOnSquare=null;
+    private ChessPiece pieceOnPosition =null;
     public ChessPositionImpl(int colInput, int rowInput) {column = colInput; row = rowInput;}
     @Override public int getRow() {return row;}
     public void setRow(int row) {this.row = row;}
@@ -14,11 +14,11 @@ public class ChessPositionImpl implements ChessPosition{
     public void setColumn(int column) {
         this.column = column;
     }
-    public ChessPiece getPieceOnSquare() {
-        return pieceOnSquare;
+    public ChessPiece getPieceOnPosition() {
+        return pieceOnPosition;
     }
-    public void setPieceOnSquare(ChessPiece pieceOnSquare) {
-        this.pieceOnSquare = pieceOnSquare;
+    public void setPieceOnPosition(ChessPiece pieceOnPosition) {
+        this.pieceOnPosition = pieceOnPosition;
     }
     public int hashCode(){
         return Objects.hash(row, column);
@@ -29,5 +29,12 @@ public class ChessPositionImpl implements ChessPosition{
         if (d.column != this.column) return false;
         if(d.row != this.row) return false;
         return true;
+    }
+    @Override public String toString() {
+        return "ChessPositionImpl{" +
+                "column=" + column +
+                ", row=" + row +
+                ", pieceOnPosition=" + pieceOnPosition +
+                '}';
     }
 }

@@ -37,4 +37,11 @@ public class ChessPieceImpl implements ChessPiece{
         if(d.pieceType !=this.pieceType) return false;
         return true;
     }
+    @Override public String toString() {
+        return "ChessPieceImpl{" +
+                "pieceType=" + pieceType +
+                ", pieceTeamColor=" + pieceTeamColor +
+                ", pieceRules=" + pieceRules +
+                '}';
+    }
 }

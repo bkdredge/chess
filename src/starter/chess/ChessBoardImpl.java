@@ -14,7 +14,7 @@ public class ChessBoardImpl implements ChessBoard{
     }
     public void addPiece(ChessPositionImpl position, ChessPieceImpl piece) {
         ChessPositionImpl boardPosition=(ChessPositionImpl) findBoardPosition(position);
-        boardPosition.setPieceOnSquare(piece);
+        boardPosition.setPieceOnPosition(piece);
     }
     public void boardMove(ChessMove move){boardMove((ChessMoveImpl) move);}
     public void boardMove(ChessMoveImpl move){
@@ -24,7 +24,7 @@ public class ChessBoardImpl implements ChessBoard{
         if (move.getPromotionPiece() != null) piece.setPieceType(move.getPromotionPiece());
     }
     @Override public ChessPiece getPiece(ChessPosition position) {return getPiece((ChessPositionImpl) position);}
-    public ChessPieceImpl getPiece(ChessPositionImpl position) {return (ChessPieceImpl)findBoardPosition(position).getPieceOnSquare();}
+    public ChessPieceImpl getPiece(ChessPositionImpl position) {return (ChessPieceImpl)findBoardPosition(position).getPieceOnPosition();}
     public ChessPosition findBoardPosition(ChessPosition position){return findBoardPosition((ChessPositionImpl) position);}
     public ChessPositionImpl findBoardPosition(ChessPositionImpl position){
         return boardPositions[position.getRow()-1][position.getColumn()-1];
