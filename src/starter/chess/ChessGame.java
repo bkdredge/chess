@@ -10,13 +10,13 @@ public interface ChessGame {
     /**
      * @return Which team's turn it is
      */
-    TeamColor getTeamTurn();
+    TeamColor getGameTeamColor();
 
     /**
      * Set's which teams turn it is
      * @param team the team whose turn it is
      */
-    void setTeamTurn(TeamColor team);
+    void setGameTeamColor(TeamColor team);
 
     /**
      * Enum identifying the 2 possible teams in a chess game
@@ -38,7 +38,7 @@ public interface ChessGame {
      * @param move chess move to preform
      * @throws InvalidMoveException if move is invalid
      */
-    void makeMove(ChessMove move) throws InvalidMoveException;
+    void gameMove(ChessMove move) throws InvalidMoveException;
 
     /**
      * Determines if the given team is in check

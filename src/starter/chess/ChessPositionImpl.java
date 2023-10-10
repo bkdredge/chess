@@ -1,32 +1,33 @@
 package chess;
 
+import java.util.Objects;
+
 public class ChessPositionImpl implements ChessPosition{
-    private int row=0;
-    private int column=0;
-    private ChessPieceImpl pieceOnPosition = null;
-    public ChessPositionImpl(int columnInput, int rowInput) {column=columnInput; row=rowInput;}
+    private int column=0, row=0;
+    private ChessPiece pieceOnSquare=null;
+    public ChessPositionImpl(int colInput, int rowInput) {column = colInput; row = rowInput;}
     @Override public int getRow() {return row;}
-    @Override public int getColumn() {return column;}
-    public ChessPieceImpl getPieceOnPosition() {return pieceOnPosition;}
-    public void setRow(int rowInput) {row = rowInput;}
-    public void setColumn(int columnInput) {column = columnInput;}
-    public void setPieceOnPosition(ChessPieceImpl pieceOnPositionInput) {pieceOnPosition = pieceOnPositionInput;}
-    public void addMoveToPieceOnPosition(ChessMoveImpl move) {
-        pieceOnPosition.addMoveToPiece(move);
+    public void setRow(int row) {this.row = row;}
+    @Override public int getColumn() {
+        return column;
     }
-    public String toStringPosition() {
-        StringBuilder out=new StringBuilder();
-        if(pieceOnPosition!=null) {
-            out.append(pieceOnPosition.toStringPiece());
-        } else {
-            out.append("NULL");
-        }
-        out.append("@("+row+","+column+")");
-        return out.toString();
+    public void setColumn(int column) {
+        this.column = column;
     }
-    public String toStringPositionInMove() {
-        StringBuilder out=new StringBuilder();
-        out.append("("+row+","+column+")");
-        return out.toString();
+    public ChessPiece getPieceOnSquare() {
+        return pieceOnSquare;
+    }
+    public void setPieceOnSquare(ChessPiece pieceOnSquare) {
+        this.pieceOnSquare = pieceOnSquare;
+    }
+    public int hashCode(){
+        return Objects.hash(row, column);
+    }
+    public boolean equals(Object o){
+        if(o.getClass()!=this.getClass()) return false; if(o==this) return true;
+        ChessPositionImpl d = (ChessPositionImpl) o;
+        if (d.column != this.column) return false;
+        if(d.row != this.row) return false;
+        return true;
     }
 }

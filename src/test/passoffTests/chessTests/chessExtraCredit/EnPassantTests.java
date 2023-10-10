@@ -52,10 +52,10 @@ public class EnPassantTests {
         //set up game
         ChessGame game = TestFactory.getNewGame();
         game.setBoard(chessBoard);
-        game.setTeamTurn(ChessGame.TeamColor.BLACK);
+        game.setGameTeamColor(ChessGame.TeamColor.BLACK);
 
         //move black piece 2 spaces
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 3), TestFactory.getNewPosition(5, 3), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 3), TestFactory.getNewPosition(5, 3), null));
         /*
         | | | | | | | | |
 		| | | | | | | | |
@@ -74,7 +74,7 @@ public class EnPassantTests {
                 "ChessGame validMoves did not contain a valid En Passant move");
 
         //en passant move works correctly
-        Assertions.assertDoesNotThrow(() -> game.makeMove(enPassantMove));
+        Assertions.assertDoesNotThrow(() -> game.gameMove(enPassantMove));
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(5, 2)),
                 "After En Passant move, piece still present at original position");
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(5, 3)),
@@ -115,10 +115,10 @@ public class EnPassantTests {
         //set up game
         ChessGame game = TestFactory.getNewGame();
         game.setBoard(chessBoard);
-        game.setTeamTurn(ChessGame.TeamColor.BLACK);
+        game.setGameTeamColor(ChessGame.TeamColor.BLACK);
 
         //move black piece 2 spaces
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 3), TestFactory.getNewPosition(5, 3), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 3), TestFactory.getNewPosition(5, 3), null));
         /*
         | | | | | | | | |
 		| | | | | | | | |
@@ -137,7 +137,7 @@ public class EnPassantTests {
                 "ChessGame validMoves did not contain a valid En Passant move");
 
         //en passant move works correctly
-        Assertions.assertDoesNotThrow(() -> game.makeMove(enPassantMove));
+        Assertions.assertDoesNotThrow(() -> game.gameMove(enPassantMove));
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(5, 4)),
                 "After En Passant move, piece still present at original position");
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(5, 3)),
@@ -178,10 +178,10 @@ public class EnPassantTests {
         //set up game
         ChessGame game = TestFactory.getNewGame();
         game.setBoard(chessBoard);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
 
         //move white piece 2 spaces
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 7), TestFactory.getNewPosition(4, 7), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 7), TestFactory.getNewPosition(4, 7), null));
         /*
         | | | | | | | | |
 		| | | | | | | | |
@@ -200,7 +200,7 @@ public class EnPassantTests {
                 "ChessGame validMoves did not contain a valid En Passant move");
 
         //en passant move works correctly
-        Assertions.assertDoesNotThrow(() -> game.makeMove(enPassantMove));
+        Assertions.assertDoesNotThrow(() -> game.gameMove(enPassantMove));
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(4, 6)),
                 "After En Passant move, piece still present at original position");
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(4, 7)),
@@ -241,10 +241,10 @@ public class EnPassantTests {
         //set up game
         ChessGame game = TestFactory.getNewGame();
         game.setBoard(chessBoard);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
 
         //move white piece 2 spaces
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 7), TestFactory.getNewPosition(4, 7), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 7), TestFactory.getNewPosition(4, 7), null));
         /*
         | | | | | | | | |
 		| | | | | | | | |
@@ -263,7 +263,7 @@ public class EnPassantTests {
                 "ChessGame validMoves did not contain a valid En Passant move");
 
         //en passant move works correctly
-        Assertions.assertDoesNotThrow(() -> game.makeMove(enPassantMove));
+        Assertions.assertDoesNotThrow(() -> game.gameMove(enPassantMove));
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(4, 8)),
                 "After En Passant move, piece still present at original position");
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(4, 7)),
@@ -310,10 +310,10 @@ public class EnPassantTests {
         //set up game
         ChessGame game = TestFactory.getNewGame();
         game.setBoard(chessBoard);
-        game.setTeamTurn(ChessGame.TeamColor.BLACK);
+        game.setGameTeamColor(ChessGame.TeamColor.BLACK);
 
         //move black piece 2 spaces
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 3), TestFactory.getNewPosition(5, 3), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 3), TestFactory.getNewPosition(5, 3), null));
         /*
         | | | | | | | | |
 		| | | | | | | | |
@@ -326,8 +326,8 @@ public class EnPassantTests {
          */
 
         //filler moves
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(6, 8), TestFactory.getNewPosition(7, 8), null));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(3, 8), TestFactory.getNewPosition(2, 8), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(6, 8), TestFactory.getNewPosition(7, 8), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(3, 8), TestFactory.getNewPosition(2, 8), null));
         /*
         | | | | | | | | |
 		| | | | | | | |P|

@@ -60,11 +60,11 @@ public class ChessGameTests {
                 TestFactory.getNewPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
 
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
         
         //king
         ChessPosition kingEndPosition = TestFactory.getNewPosition(1, 1);
-        game.makeMove(TestFactory.getNewMove(kingStartPosition, kingEndPosition, null));
+        game.gameMove(TestFactory.getNewMove(kingStartPosition, kingEndPosition, null));
         
         Assertions.assertNull(game.getBoard().getPiece(kingStartPosition), 
                 "After move, a piece is still present in the start position");
@@ -88,7 +88,7 @@ public class ChessGameTests {
 
         //queen
         ChessPosition queenEndPosition = TestFactory.getNewPosition(8, 7);
-        game.makeMove(TestFactory.getNewMove(queenStartPosition, queenEndPosition, null));
+        game.gameMove(TestFactory.getNewMove(queenStartPosition, queenEndPosition, null));
 
         Assertions.assertNull(game.getBoard().getPiece(queenStartPosition),
                 "After move, a piece is still present in the start position");
@@ -112,7 +112,7 @@ public class ChessGameTests {
 
         //rook
         ChessPosition rookEndPosition = TestFactory.getNewPosition(3, 8);
-        game.makeMove(TestFactory.getNewMove(rookStartPosition, rookEndPosition, null));
+        game.gameMove(TestFactory.getNewMove(rookStartPosition, rookEndPosition, null));
 
         Assertions.assertNull(game.getBoard().getPiece(rookStartPosition),
                 "After move, a piece is still present in the start position");
@@ -136,7 +136,7 @@ public class ChessGameTests {
 
         //knight
         ChessPosition knightEndPosition = TestFactory.getNewPosition(7, 5);
-        game.makeMove(TestFactory.getNewMove(knightStartPosition, knightEndPosition, null));
+        game.gameMove(TestFactory.getNewMove(knightStartPosition, knightEndPosition, null));
 
         Assertions.assertNull(game.getBoard().getPiece(knightStartPosition),
                 "After move, a piece is still present in the start position");
@@ -160,7 +160,7 @@ public class ChessGameTests {
 
         //bishop
         ChessPosition bishopEndPosition = TestFactory.getNewPosition(1, 2);
-        game.makeMove(TestFactory.getNewMove(bishopStartPosition, bishopEndPosition, null));
+        game.gameMove(TestFactory.getNewMove(bishopStartPosition, bishopEndPosition, null));
 
         Assertions.assertNull(game.getBoard().getPiece(bishopStartPosition),
                 "After move, a piece is still present in the start position");
@@ -184,7 +184,7 @@ public class ChessGameTests {
 
         //pawn
         ChessPosition pawnEndPosition = TestFactory.getNewPosition(5, 7);
-        game.makeMove(TestFactory.getNewMove(pawnStartPosition, pawnEndPosition, null));
+        game.gameMove(TestFactory.getNewMove(pawnStartPosition, pawnEndPosition, null));
 
         Assertions.assertNull(game.getBoard().getPiece(pawnStartPosition),
                 "After move, a piece is still present in the start position");
@@ -213,7 +213,7 @@ public class ChessGameTests {
     public void invalidMoves() throws InvalidMoveException {
         board.resetBoard();
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
         /*
         |r|n|b|q|k|b|n|r|
 		|p|p|p|p|p|p|p|p|
@@ -226,9 +226,9 @@ public class ChessGameTests {
          */
 
         //move further than can go
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(2, 1), TestFactory.getNewPosition(5, 1), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 1), TestFactory.getNewPosition(3, 1), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 1), TestFactory.getNewPosition(3, 1), null));
         /*
         |r|n|b|q|k|b|n|r|
 		|p|p|p|p|p|p|p|p|
@@ -241,9 +241,9 @@ public class ChessGameTests {
          */
 
         //pawn diagonal when no capture
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(7, 2), TestFactory.getNewPosition(6, 3), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 2), TestFactory.getNewPosition(6, 2), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 2), TestFactory.getNewPosition(6, 2), null));
         /*
         |r|n|b|q|k|b|n|r|
 		|p| |p|p|p|p|p|p|
@@ -256,13 +256,13 @@ public class ChessGameTests {
          */
 
         //make move out of turn
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(6, 2), TestFactory.getNewPosition(5, 2), null)));
 
         //pawn in way
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(1, 1), TestFactory.getNewPosition(4, 1), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 1), TestFactory.getNewPosition(2, 1), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 1), TestFactory.getNewPosition(2, 1), null));
         /*
         |r|n|b|q|k|b|n|r|
 		|p| |p|p|p|p|p|p|
@@ -275,9 +275,9 @@ public class ChessGameTests {
          */
 
         //not a move the piece can ever take
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(8, 7), TestFactory.getNewPosition(5, 5), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(8, 7), TestFactory.getNewPosition(6, 6), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(8, 7), TestFactory.getNewPosition(6, 6), null));
         /*
         |r|n|b|q|k|b| |r|
 		|p| |p|p|p|p|p|p|
@@ -290,9 +290,9 @@ public class ChessGameTests {
          */
 
         //team at destination
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(1, 6), TestFactory.getNewPosition(2, 5), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 5), TestFactory.getNewPosition(4, 5), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 5), TestFactory.getNewPosition(4, 5), null));
         /*
         |r|n|b|q|k|b| |r|
 		|p| |p|p|p|p|p|p|
@@ -305,9 +305,9 @@ public class ChessGameTests {
          */
 
         //team blocking path
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(8, 4), TestFactory.getNewPosition(6, 4), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(6, 6), TestFactory.getNewPosition(4, 5), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(6, 6), TestFactory.getNewPosition(4, 5), null));
         /*
         |r|n|b|q|k|b| |r|
 		|p| |p|p|p|p|p|p|
@@ -320,10 +320,10 @@ public class ChessGameTests {
          */
 
         //try moving captured piece
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(4, 5), TestFactory.getNewPosition(5, 5), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 6), TestFactory.getNewPosition(3, 4), null));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(8, 3), TestFactory.getNewPosition(6, 1), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 6), TestFactory.getNewPosition(3, 4), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(8, 3), TestFactory.getNewPosition(6, 1), null));
         /*
         |r|n| |q|k|b| |r|
 		|p| |p|p|p|p|p|p|
@@ -336,10 +336,10 @@ public class ChessGameTests {
          */
 
         //try moving through enemy piece
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(3, 4), TestFactory.getNewPosition(5, 6), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 7), TestFactory.getNewPosition(3, 6), null));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(4, 5), TestFactory.getNewPosition(2, 4), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 7), TestFactory.getNewPosition(3, 6), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(4, 5), TestFactory.getNewPosition(2, 4), null));
         Assertions.assertFalse(game.isInCheck(ChessGame.TeamColor.WHITE),
                 "White is not in check but isInCheck returned true");
         /*
@@ -353,8 +353,8 @@ public class ChessGameTests {
 		| |N|B|Q|K| | |R|
          */
 
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 8), TestFactory.getNewPosition(1, 7), null));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 4), TestFactory.getNewPosition(3, 6), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 8), TestFactory.getNewPosition(1, 7), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 4), TestFactory.getNewPosition(3, 6), null));
         Assertions.assertTrue(game.isInCheck(ChessGame.TeamColor.WHITE),
                 "White is in check but isInCheck returned false");
         /*
@@ -369,9 +369,9 @@ public class ChessGameTests {
          */
 
         //try not getting out of check
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(1, 7), TestFactory.getNewPosition(1, 8), null)));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 7), TestFactory.getNewPosition(3, 6), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 7), TestFactory.getNewPosition(3, 6), null));
         Assertions.assertFalse(game.isInCheck(ChessGame.TeamColor.WHITE),
                 "White is not in check but isInCheck returned true");
         /*
@@ -386,13 +386,13 @@ public class ChessGameTests {
          */
 
         //try double-moving moved pawn
-        Assertions.assertThrows(InvalidMoveException.class, () -> game.makeMove(
+        Assertions.assertThrows(InvalidMoveException.class, () -> game.gameMove(
                 TestFactory.getNewMove(TestFactory.getNewPosition(6, 2), TestFactory.getNewPosition(4, 2), null)));
 
         //few more moves to try
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(6, 2), TestFactory.getNewPosition(5, 2), null));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 7), TestFactory.getNewPosition(1, 8), null));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(5, 2), TestFactory.getNewPosition(4, 2), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(6, 2), TestFactory.getNewPosition(5, 2), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 7), TestFactory.getNewPosition(1, 8), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(5, 2), TestFactory.getNewPosition(4, 2), null));
         /*
         |r|n| |q|k|b| |r|
 		|p| |p|p|p|p|p|p|
@@ -420,7 +420,7 @@ public class ChessGameTests {
                 TestFactory.getNewPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.QUEEN));
 
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
         /*
         | | | | | | | | |
 		| | |P| | | | | |
@@ -435,7 +435,7 @@ public class ChessGameTests {
         //White promotion
         ChessMove whitePromotion = TestFactory.getNewMove(TestFactory.getNewPosition(7, 3),
                 TestFactory.getNewPosition(8, 3), promotionType);
-        game.makeMove(whitePromotion);
+        game.gameMove(whitePromotion);
 
         Assertions.assertNull(game.getBoard().getPiece(whitePromotion.getStartPosition()),
                 "After move, a piece is still present in the start position");
@@ -450,7 +450,7 @@ public class ChessGameTests {
         //Black take + promotion
         ChessMove blackPromotion = TestFactory.getNewMove(TestFactory.getNewPosition(2, 5),
                 TestFactory.getNewPosition(1, 6), promotionType);
-        game.makeMove(blackPromotion);
+        game.gameMove(blackPromotion);
 
         Assertions.assertNull(game.getBoard().getPiece(blackPromotion.getStartPosition()),
                 "After move, a piece is still present in the start position");
@@ -494,7 +494,7 @@ public class ChessGameTests {
         //set up game
         game = TestFactory.getNewGame();
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
 
         Assertions.assertTrue(game.isInCheck(ChessGame.TeamColor.WHITE),
                 "White is in check but isInCheck returned false");
@@ -671,7 +671,7 @@ public class ChessGameTests {
         //set up game
         game = TestFactory.getNewGame();
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
 
         Assertions.assertTrue(game.isInStalemate(ChessGame.TeamColor.WHITE),
                 "White is in a stalemate but isInStalemate returned false");
@@ -685,7 +685,7 @@ public class ChessGameTests {
     public void scholarsMate() throws InvalidMoveException {
         board.resetBoard();
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
 
 
         Assertions.assertFalse(game.isInCheckmate(ChessGame.TeamColor.BLACK),
@@ -702,7 +702,7 @@ public class ChessGameTests {
 		|R|N|B|Q|K|B|N|R|
          */
 
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 5), TestFactory.getNewPosition(4, 5), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(2, 5), TestFactory.getNewPosition(4, 5), null));
         /*
         |r|n|b|q|k|b|n|r|
 		|p|p|p|p|p|p|p|p|
@@ -714,7 +714,7 @@ public class ChessGameTests {
 		|R|N|B|Q|K|B|N|R|
          */
 
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 5), TestFactory.getNewPosition(5, 5), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 5), TestFactory.getNewPosition(5, 5), null));
         /*
         |r|n|b|q|k|b|n|r|
 		|p|p|p|p| |p|p|p|
@@ -726,7 +726,7 @@ public class ChessGameTests {
 		|R|N|B|Q|K|B|N|R|
          */
 
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 6), TestFactory.getNewPosition(4, 3), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 6), TestFactory.getNewPosition(4, 3), null));
         /*
         |r|n|b|q|k|b|n|r|
 		|p|p|p|p| |p|p|p|
@@ -738,7 +738,7 @@ public class ChessGameTests {
 		|R|N|B|Q|K| |N|R|
          */
 
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(8, 7), TestFactory.getNewPosition(6, 6), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(8, 7), TestFactory.getNewPosition(6, 6), null));
         /*
         |r|n|b|q|k|b| |r|
 		|p|p|p|p| |p|p|p|
@@ -750,7 +750,7 @@ public class ChessGameTests {
 		|R|N|B|Q|K| |N|R|
          */
 
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 4), TestFactory.getNewPosition(5, 8), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 4), TestFactory.getNewPosition(5, 8), null));
         /*
         |r|n|b|q|k|b| |r|
 		|p|p|p|p| |p|p|p|
@@ -762,7 +762,7 @@ public class ChessGameTests {
 		|R|N|B| |K| |N|R|
          */
 
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(8, 2), TestFactory.getNewPosition(6, 3), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(8, 2), TestFactory.getNewPosition(6, 3), null));
         /*
         |r| |b|q|k|b| |r|
 		|p|p|p|p| |p|p|p|
@@ -774,7 +774,7 @@ public class ChessGameTests {
 		|R|N|B| |K| |N|R|
          */
 
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(5, 8), TestFactory.getNewPosition(7, 6), null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(5, 8), TestFactory.getNewPosition(7, 6), null));
         /*
         |r| |b|q|k|b| |r|
 		|p|p|p|p| |Q|p|p|

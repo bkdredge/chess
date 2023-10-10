@@ -1,51 +1,40 @@
 package chess;
-
-import java.util.ArrayList;
 import java.util.Collection;
-
-public class ChessPieceImpl implements ChessPiece {
-    private ChessGame.TeamColor teamColor=null;
-    private PieceType pieceType=null;
-    private Collection<ChessMoveImpl> pieceMoves=new ArrayList<>();
-    public ChessPieceImpl(ChessGame.TeamColor colorInput, PieceType typeInput) {teamColor=colorInput; pieceType=typeInput;}
-    @Override public ChessGame.TeamColor getTeamColor() {return teamColor;}
+public class ChessPieceImpl implements ChessPiece{
+    private PieceType pieceType = null;
+    private ChessGame.TeamColor pieceTeamColor = null;
+    private ChessPieceImplRules pieceRules;
+    //private ChessBoardImpl pieceBoard;
+    public ChessPieceImpl(PieceType typeInput, ChessGame.TeamColor colorInput){
+        pieceType = typeInput; pieceTeamColor=colorInput;
+    }
+    @Override public ChessGame.TeamColor getTeamColor() {return pieceTeamColor;}
     @Override public PieceType getPieceType() {return pieceType;}
-    @Override public Collection<ChessMoveImpl> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+    public void setPieceType(PieceType type) {this.pieceType = type;}
+    @Override public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         return pieceMoves((ChessBoardImpl) board, (ChessPositionImpl) myPosition);
     }
-    public Collection<ChessMoveImpl> pieceMoves(ChessBoardImpl board, ChessPositionImpl myPosition) {
-        pieceMoves.add(new ChessMoveImpl(new ChessPositionImpl(0,0),new ChessPositionImpl(6,6),null));
-        return pieceMoves;
-    }
-    /*
-    void removeMoves() {pieceMoves.clear();}
-
-    void addMove(ChessMoveImpl chessMoveInput) {
-        pieceMoves.add(chessMoveInput);
-    }
-      */
-    public String toStringPiece() {
-        StringBuilder out=new StringBuilder();
-        if(teamColor==ChessGame.TeamColor.WHITE) {out.append("(WHITE)");}
-        else if (teamColor==ChessGame.TeamColor.BLACK) {out.append("(BLACK)");}
-        else {out.append("(UNKNOWN)");}
-        if(pieceType==PieceType.PAWN) {out.append("PAWN");}
-        else if(pieceType==PieceType.ROOK) {out.append("ROOK");}
-        else if(pieceType==PieceType.KNIGHT) {out.append("KNIGHT");}
-        else if(pieceType==PieceType.BISHOP) {out.append("BISHOP");}
-        else if(pieceType==PieceType.KING) {out.append("KING");}
-        else if(pieceType==PieceType.QUEEN) {out.append("QUEEN");}
-        return out.toString();
-    }
-    public void addMoveToPiece(ChessMoveImpl chessMove) {
-        pieceMoves.add(chessMove);
-    }
-    public String toStringAllMoves() {
-        StringBuilder out=new StringBuilder();
-        out.append(toStringPiece()+"-moves:\n");
-        for(ChessMoveImpl move:pieceMoves) {
-            move.toStringMove();
+    public Collection<ChessMove> pieceMoves(ChessBoardImpl board, ChessPositionImpl myPosition) {
+        if(pieceType == PieceType.BISHOP) {
+            pieceRules = new ChessPieceImplRulesBishop(); return pieceRules.populatePieceRules(myPosition, board);
+        } else if(pieceType == PieceType.KING){
+            pieceRules=new ChessPieceImplRulesKing(); return pieceRules.populatePieceRules(myPosition, board);
+        } else if(pieceType == PieceType.KNIGHT){
+            pieceRules=new ChessPieceImplRulesKnight(); return pieceRules.populatePieceRules(myPosition, board);
+        } else if(pieceType == PieceType.PAWN){
+            pieceRules=new ChessPieceImplRulesPawn(); return pieceRules.populatePieceRules(myPosition, board);
+        } else if(pieceType == PieceType.QUEEN){
+            pieceRules=new ChessPieceImplRulesQueen(); return pieceRules.populatePieceRules(myPosition, board);
+        } else if(pieceType == PieceType.ROOK){
+            pieceRules=new ChessPieceImplRulesRook(); return pieceRules.populatePieceRules(myPosition, board);
         }
-        return out.toString();
+        return null;
+    }
+    public boolean equals(Object o){
+        if(o.getClass()!=this.getClass()) return false; if(o==this) return true;
+        ChessPieceImpl d=(ChessPieceImpl) o;
+        if(d.pieceTeamColor !=this.pieceTeamColor) return false;
+        if(d.pieceType !=this.pieceType) return false;
+        return true;
     }
 }

@@ -35,5 +35,5 @@ public interface ChessPiece {
      *
      * @return Collection of valid moves
      */
-    Collection<ChessMoveImpl> pieceMoves(ChessBoard board, ChessPosition myPosition);
+    Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition);
 }

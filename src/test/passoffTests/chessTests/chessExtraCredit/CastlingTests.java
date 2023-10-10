@@ -56,7 +56,7 @@ public class CastlingTests {
         //set up game
         ChessGame game = TestFactory.getNewGame();
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
 
         //check that with nothing in way, king can castle
         ChessMove queenSide = TestFactory.getNewMove(TestFactory.getNewPosition(1, 5),
@@ -70,7 +70,7 @@ public class CastlingTests {
                 "ChessGame validMoves did not contain valid king-side castle move");
 
         //queen side castle works correctly
-        Assertions.assertDoesNotThrow(() -> game.makeMove(queenSide));
+        Assertions.assertDoesNotThrow(() -> game.gameMove(queenSide));
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(1, 5)),
                 "After castling move, a piece is still present in the king's initial position");
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(1, 1)),
@@ -100,10 +100,10 @@ public class CastlingTests {
         board.addPiece(TestFactory.getNewPosition(1, 8),
                 TestFactory.getNewPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
 
         //king side castle works correctly
-        Assertions.assertDoesNotThrow(() -> game.makeMove(kingSide));
+        Assertions.assertDoesNotThrow(() -> game.gameMove(kingSide));
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(1, 5)),
                 "After castling move, a piece is still present in the king's initial position");
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(1, 8)),
@@ -162,7 +162,7 @@ public class CastlingTests {
         //set up game
         ChessGame game = TestFactory.getNewGame();
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.BLACK);
+        game.setGameTeamColor(ChessGame.TeamColor.BLACK);
 
         //check that with nothing in way, king can castle
         ChessMove queenSide = TestFactory.getNewMove(TestFactory.getNewPosition(8, 5),
@@ -176,7 +176,7 @@ public class CastlingTests {
                 "ChessGame validMoves did not contain valid king-side castle move");
 
         //queen side castle works correctly
-        Assertions.assertDoesNotThrow(() -> game.makeMove(queenSide));
+        Assertions.assertDoesNotThrow(() -> game.gameMove(queenSide));
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(8, 5)),
                 "After castling move, a piece is still present in the king's initial position");
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(8, 1)),
@@ -212,10 +212,10 @@ public class CastlingTests {
         board.addPiece(TestFactory.getNewPosition(7, 8),
                 TestFactory.getNewPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.QUEEN));
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.BLACK);
+        game.setGameTeamColor(ChessGame.TeamColor.BLACK);
 
         //king side castle works correctly
-        Assertions.assertDoesNotThrow(() -> game.makeMove(kingSide));
+        Assertions.assertDoesNotThrow(() -> game.gameMove(kingSide));
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(8, 5)),
                 "After castling move, a piece is still present in the king's initial position");
         Assertions.assertNull(game.getBoard().getPiece(TestFactory.getNewPosition(8, 8)),
@@ -373,12 +373,12 @@ public class CastlingTests {
         //set up game
         ChessGame game = TestFactory.getNewGame();
         game.setBoard(board);
-        game.setTeamTurn(ChessGame.TeamColor.WHITE);
+        game.setGameTeamColor(ChessGame.TeamColor.WHITE);
 
         //move left rook
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 1),
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 1),
                 TestFactory.getNewPosition(1, 4), null));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 1),
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(7, 1),
                 TestFactory.getNewPosition(6, 1), null));
         /*
         | | | | | | | | |
@@ -392,7 +392,7 @@ public class CastlingTests {
          */
 
         //move rook back to starting spot
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 4),
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 4),
                 TestFactory.getNewPosition(1, 1), null));
         /*
         | | | | | | | | |
@@ -417,9 +417,9 @@ public class CastlingTests {
                 "ChessGame validMoves contained an invalid castling move");
 
         //move king
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(6, 1),
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(6, 1),
                 TestFactory.getNewPosition(5, 1), null));
-        game.makeMove(TestFactory.getNewMove(position, TestFactory.getNewPosition(1, 6), null));
+        game.gameMove(TestFactory.getNewMove(position, TestFactory.getNewPosition(1, 6), null));
         /*
         | | | | | | | | |
 		| | | | | | | | |
@@ -432,9 +432,9 @@ public class CastlingTests {
          */
 
         //move king back to starting position
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(5, 1),
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(5, 1),
                 TestFactory.getNewPosition(4, 1), null));
-        game.makeMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 6), position, null));
+        game.gameMove(TestFactory.getNewMove(TestFactory.getNewPosition(1, 6), position, null));
         /*
         | | | | | | | | |
 		| | | | | | | | |

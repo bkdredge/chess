@@ -11,7 +11,7 @@ public class TestFactory {
     //Chess Functions
     //------------------------------------------------------------------------------------------------------------------
     public static ChessBoard getNewBoard(){
-		return new ChessBoardImpl();
+        return new ChessBoardImpl();
     }
 
     public static ChessGame getNewGame(){
@@ -19,15 +19,15 @@ public class TestFactory {
     }
 
     public static ChessPiece getNewPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type){
-        return new ChessPieceImpl(pieceColor,type);
+        return new ChessPieceImpl(type,pieceColor);
     }
 
     public static ChessPosition getNewPosition(Integer row, Integer col){
-        return new ChessPositionImpl(row,col);
+        return new ChessPositionImpl(col, row);
     }
 
     public static ChessMove getNewMove(ChessPosition startPosition, ChessPosition endPosition, ChessPiece.PieceType promotionPiece){
-        return new ChessMoveImpl((ChessPositionImpl) startPosition, (ChessPositionImpl) endPosition, promotionPiece);
+        return new ChessMoveImpl(startPosition,endPosition,promotionPiece);
     }
     //------------------------------------------------------------------------------------------------------------------
 
