@@ -3,7 +3,7 @@ import java.util.Collection;
 public class ChessPieceImpl implements ChessPiece{
     private PieceType pieceType = null;
     private ChessGame.TeamColor pieceTeamColor = null;
-    private ChessPieceImplRules pieceRules;
+    public ChessPieceImplRules pieceRules;
     //private ChessBoardImpl pieceBoard;
     public ChessPieceImpl(PieceType typeInput, ChessGame.TeamColor colorInput){
         pieceType = typeInput; pieceTeamColor=colorInput;
