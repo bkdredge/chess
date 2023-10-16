@@ -4,7 +4,7 @@ import model.AuthToken;
 
 public class AuthDAO {
     /**
-     *
+     * An authentication token, represented in the data access object.
      */
     AuthToken authToken = null;
 

@@ -14,40 +14,21 @@ public class AuthToken {
     String username = null;
 
     /**
-     * Empty constructor
+     * An empty AuthToken constructor
      */
     public AuthToken(){}
 
     /**
-     * A fully-parametrized constructor.
+     * A fully-parametrized AuthToken constructor.
      */
     public AuthToken(String authToken, String username) {
         this.authToken = authToken;
         this.username = username;
     }
 
-    /**
-     * A getter for the authentication token.
-     * @return authToken
-     */
     public String getAuthToken() {return authToken;}
-
-    /**
-     * A setter for the authentication token.
-     * @param authToken
-     */
     public void setAuthToken(String authToken) {this.authToken = authToken;}
-
-    /**
-     * A getter for the username.
-     * @return username
-     */
     public String getUsername() {return username;}
-
-    /**
-     * A setter for the username.
-     * @param username
-     */
     public void setUsername(String username) {this.username = username;}
 
     /**

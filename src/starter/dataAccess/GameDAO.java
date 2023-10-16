@@ -5,7 +5,7 @@ import model.User;
 
 public class GameDAO {
     /**
-     *
+     * A game, represented in the data access object.
      */
     Game game = null;
 

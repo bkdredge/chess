@@ -4,7 +4,7 @@ import model.User;
 
 public class UserDAO {
     /**
-     *
+     * A user, represented in the data access object.
      */
     User user = null;
 

@@ -2,27 +2,27 @@ package model;
 
 public class User {
     /**
-     *
+     * The user's username. (String)
      */
     String username = null;
 
     /**
-     *
+     * The user's password. (String)
      */
     String password = null;
 
     /**
-     *
+     * The user's email. (String)
      */
     String email = null;
 
     /**
-     *
+     * An empty User constructor.
      */
     public User(){}
 
     /**
-     *
+     * A fully-parametrized User constructor.
      * @param username
      * @param password
      * @param email
@@ -33,50 +33,21 @@ public class User {
         this.email = email;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getUsername() {return username;}
-
-    /**
-     *
-     * @param username
-     */
     public void setUsername(String username) {this.username = username;}
-
-    /**
-     *
-     * @return
-     */
     public String getPassword() {return password;}
-
-    /**
-     *
-     * @param password
-     */
     public void setPassword(String password) {this.password = password;}
-
-    /**
-     *
-     * @return
-     */
     public String getEmail() {return email;}
-
-    /**
-     *
-     * @param email
-     */
     public void setEmail(String email) {this.email = email;}
 
     /**
-     *
-     * @return
+     * A custom hashcode function.
+     * @return hash
      */
     @Override public int hashCode() {return super.hashCode();}
 
     /**
-     *
+     * A boolean equals function, to compare users.
      * @param o, the object
      * @return true or false
      */
@@ -91,8 +62,8 @@ public class User {
     }
 
     /**
-     *
-     * @return
+     * A custom toString function
+     * @return string
      */
     @Override public String toString() {
         return "User{" +

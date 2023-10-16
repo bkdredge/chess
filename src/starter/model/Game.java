@@ -7,37 +7,37 @@ import java.util.Objects;
 
 public class Game {
     /**
-     *
+     * The game's game ID. (Int)
      */
     int gameID = 0;
 
     /**
-     *
+     * The username of the game's white player. (String)
      */
     String whiteUsername = null;
 
     /**
-     *
+     * The username of the game's black player. (String)
      */
     String blackUsername = null;
 
     /**
-     *
+     * The game's name. (String)
      */
     String gameName = null;
 
     /**
-     *
+     * The game itself. (ChessGame)
      */
     ChessGame game = new ChessGameImpl();
 
     /**
-     *
+     * An empty Game constructor.
      */
     public Game() {}
 
     /**
-     *
+     * A fully-parametrized Game constructor.
      * @param gameID
      * @param whiteUsername
      * @param blackUsername
@@ -52,70 +52,21 @@ public class Game {
         this.game = game;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getGameID() {return gameID;}
-
-    /**
-     *
-     * @param gameID
-     */
     public void setGameID(int gameID) {this.gameID = gameID;}
-
-    /**
-     *
-     * @return
-     */
     public String getWhiteUsername() {return whiteUsername;}
-
-    /**
-     *
-     * @param whiteUsername
-     */
     public void setWhiteUsername(String whiteUsername) {this.whiteUsername = whiteUsername;}
-
-    /**
-     *
-     * @return
-     */
     public String getBlackUsername() {return blackUsername;}
-
-    /**
-     *
-     * @param blackUsername
-     */
     public void setBlackUsername(String blackUsername) {this.blackUsername = blackUsername;}
-
-    /**
-     *
-     * @return
-     */
     public String getGameName() {return gameName;}
-
-    /**
-     *
-     * @param gameName
-     */
     public void setGameName(String gameName) {this.gameName = gameName;}
-
-    /**
-     *
-     * @return
-     */
     public ChessGame getGame() {return game;}
-
-    /**
-     *
-     * @param game
-     */
     public void setGame(ChessGame game) {this.game = game;}
 
     /**
-     *
+     * A boolean equals function, to compare games.
      * @param o, the object
-     * @return
+     * @return true or false
      */
     @Override public boolean equals(Object o) {
         if(o==null) return false; if (o==this) return true;
@@ -130,14 +81,14 @@ public class Game {
     }
 
     /**
-     *
-     * @return
+     * A custom hashcode function
+     * @return hash
      */
     @Override public int hashCode() {return Objects.hash(gameID, whiteUsername, blackUsername, gameName, game);}
 
     /**
-     *
-     * @return
+     * A custom toString function
+     * @return string
      */
     @Override public String toString() {
         return "Game{" +
