@@ -1,5 +1,4 @@
 package result;
-
 /**
  * The result of a Login request.
  */

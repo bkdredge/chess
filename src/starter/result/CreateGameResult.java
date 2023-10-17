@@ -1,4 +1,6 @@
 package result;
+import model.Game;
+
 /**
  * The result of a Create Game request.
  */

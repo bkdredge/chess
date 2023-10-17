@@ -1,4 +1,5 @@
 package result;
+
 /**
  * The result of a Register request.
  */
