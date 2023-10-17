@@ -2,6 +2,9 @@ package chess;
 
 import java.util.Arrays;
 
+/**
+ * Custom implementation of the ChessBoard class.
+ */
 public class ChessBoardImpl implements ChessBoard{
     private ChessPositionImpl[][] boardPositions=new ChessPositionImpl[8][8];;
     public ChessBoardImpl(){

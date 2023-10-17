@@ -2,6 +2,9 @@ package chess;
 
 import java.util.Objects;
 
+/**
+ * Custom implementation of the ChessMove class.
+ */
 public class ChessMoveImpl implements ChessMove{
     private ChessPosition startPosition,endPosition;
     private ChessPiece.PieceType promotionPiece;

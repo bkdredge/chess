@@ -1,6 +1,10 @@
 package chess;
 import java.util.Collection;
 import java.util.HashSet;
+
+/**
+ * Implementation of rules for the Knight.
+ */
 public class ChessPieceImplRulesKnight implements ChessPieceImplRules {
     private Collection<ChessMove> knightMoves = new HashSet<>();
     private ChessBoardImpl knightBoard;

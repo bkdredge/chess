@@ -2,6 +2,9 @@ package chess;
 
 import java.util.Objects;
 
+/**
+ * Custom implementation of the ChessPosition class.
+ */
 public class ChessPositionImpl implements ChessPosition{
     private int column=0, row=0;
     private ChessPiece pieceOnPosition =null;

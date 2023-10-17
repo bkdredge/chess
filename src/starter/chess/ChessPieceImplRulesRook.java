@@ -1,6 +1,10 @@
 package chess;
 import java.util.Collection;
 import java.util.HashSet;
+
+/**
+ * Implementation of rules for the Rook.
+ */
 public class ChessPieceImplRulesRook implements ChessPieceImplRules {
     private Collection<ChessMove> rookMoves=new HashSet<>();
     private ChessBoardImpl rookBoard;

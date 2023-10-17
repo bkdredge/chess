@@ -5,6 +5,9 @@ import model.User;
 
 import java.util.Collection;
 
+/**
+ * Data Access Object for games in the database.
+ */
 public class GameDAO {
 
     /**

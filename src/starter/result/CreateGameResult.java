@@ -1,5 +1,7 @@
 package result;
-
+/**
+ * The result of a Create Game request.
+ */
 public class CreateGameResult {
     private String message;
     public CreateGameResult(){}

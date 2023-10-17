@@ -1,5 +1,7 @@
 package result;
-
+/**
+ * The result of a Register request.
+ */
 public class RegisterResult {
     private String message;
     public RegisterResult(){}

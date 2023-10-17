@@ -3,6 +3,9 @@ package chess;
 import java.util.Collection;
 import java.util.HashSet;
 
+/**
+ * Implementation of rules for the King.
+ */
 public class ChessPieceImplRulesKing implements ChessPieceImplRules {
     private Collection<ChessMove> kingMoves = new HashSet<>();
     private ChessBoardImpl kingBoard;

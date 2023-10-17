@@ -1,5 +1,7 @@
 package result;
-
+/**
+ * The result of a Logout request.
+ */
 public class LogoutResult {
     private String message;
     public LogoutResult(){}

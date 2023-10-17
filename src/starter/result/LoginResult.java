@@ -1,5 +1,8 @@
 package result;
 
+/**
+ * The result of a Login request.
+ */
 public class LoginResult {
     private String message;
     private String authToken;

@@ -1,5 +1,7 @@
 package request;
-
+/**
+ * The request to log in.
+ */
 public class LoginRequest {
     private String username;
     private String password;

@@ -1,6 +1,10 @@
 package chess;
 import java.util.Collection;
 import java.util.HashSet;
+
+/**
+ * Implementation of rules for the Bishop.
+ */
 public class ChessPieceImplRulesBishop implements ChessPieceImplRules {
     private Collection<ChessMove>bishopMoves = new HashSet<>();
     private ChessBoardImpl bishopBoard;

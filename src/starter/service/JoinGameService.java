@@ -2,7 +2,9 @@ package service;
 
 import request.JoinGameRequest;
 import result.JoinGameResult;
-
+/**
+ * The service for joining a game using a request and result.
+ */
 public class JoinGameService {
     /**
      * 	Verifies that the specified game exists,

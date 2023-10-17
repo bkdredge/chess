@@ -1,6 +1,10 @@
 package chess;
 import java.util.Collection;
 import java.util.HashSet;
+
+/**
+ * Custom implementation of the ChessGame class.
+ */
 public class ChessGameImpl implements ChessGame{
     private TeamColor gameTeamColor = null;
     private ChessBoardImpl gameBoard = new ChessBoardImpl();

@@ -4,6 +4,9 @@ import model.AuthToken;
 
 import java.util.Collection;
 
+/**
+ * Data Access Object for authentication tokens in the database.
+ */
 public class AuthDAO {
     /**
      * A method for inserting a new authentication token into the database.

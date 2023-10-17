@@ -1,5 +1,9 @@
 package chess;
 import java.util.Collection;
+
+/**
+ * Custom implementation of the ChessPiece class.
+ */
 public class ChessPieceImpl implements ChessPiece{
     private PieceType pieceType = null;
     private ChessGame.TeamColor pieceTeamColor = null;

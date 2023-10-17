@@ -1,8 +1,11 @@
 package chess;
 
-import javax.swing.text.Position;
 import java.util.Collection;
 import java.util.HashSet;
+
+/**
+ * Implementation of rules for the Pawn.
+ */
 public class ChessPieceImplRulesPawn implements ChessPieceImplRules {
     private Collection<ChessMove> pawnMoves = new HashSet<>();
     private ChessBoardImpl pawnBoard;

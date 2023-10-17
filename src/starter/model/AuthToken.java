@@ -2,6 +2,9 @@ package model;
 
 import java.util.Objects;
 
+/**
+ * A model for an authentication token.
+ */
 public class AuthToken {
     /**
      * An authentication token. (String)

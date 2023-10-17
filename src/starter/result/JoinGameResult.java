@@ -1,5 +1,7 @@
 package result;
-
+/**
+ * The result of a Join Game request.
+ */
 public class JoinGameResult {
     private String message;
     public JoinGameResult(){}

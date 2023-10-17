@@ -5,6 +5,9 @@ import chess.ChessGameImpl;
 
 import java.util.Objects;
 
+/**
+ * A model for a game.
+ */
 public class Game {
     /**
      * The game's game ID. (Int)

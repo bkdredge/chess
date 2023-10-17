@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * A model for a user.
+ */
 public class User {
     /**
      * The user's username. (String)

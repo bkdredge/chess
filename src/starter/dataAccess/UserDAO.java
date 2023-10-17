@@ -4,6 +4,9 @@ import model.User;
 
 import java.util.Collection;
 
+/**
+ * Data Access Object for users in the database.
+ */
 public class UserDAO {
 
     /**
