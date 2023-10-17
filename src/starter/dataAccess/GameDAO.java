@@ -3,52 +3,65 @@ package dataAccess;
 import model.Game;
 import model.User;
 
+import java.util.Collection;
+
 public class GameDAO {
-    /**
-     * A game, represented in the data access object.
-     */
-    Game game = null;
 
     /**
-     *
-     * @param newGame
+     * A method for inserting a name game into the database.
+     * @param game
      * @throws DataAccessException
      */
-    void createGame(Game newGame) throws DataAccessException {
-        game=newGame;
+    void insertGameIntoDatabase(Game game) throws DataAccessException {}
+
+    /**
+     * A method for retrieving a single game from the database,
+     * from a gameID (String)
+     * @param gameID
+     * @throws DataAccessException
+     */
+    Game retrieveGameFromDatabase(String gameID) throws DataAccessException{
+        return null;
     }
-    /**
-     *
-     */
-    void insert() {}
 
     /**
-     *
+     * A method for retrieving all games from the database.
+     * This is in the form of a collection of games.
+     * @throws DataAccessException
      */
-    void find(){}
+    Collection<Game> retrieveAllGamesFromDatabase() throws DataAccessException{
+        return null;
+    }
 
     /**
-     *
+     * A method for claiming a spot in the game.
+     * The player's name is provided,
+     * and the player is saved as either the
+     * whitePlayer or blackPlayer in the database.
+     * @param username
+     * @throws DataAccessException
      */
-    void findAll(){}
+    void assignTeamInGame(String username) throws DataAccessException{} // claimSpot
 
     /**
-     *
+     * Updates a game,
+     * replacing chessGame string corresponding to a given gameID
+     * with a new chessGame string.
+     * @param gameToUpdate
+     * @throws DataAccessException
      */
-    void claimSpot(){}
+    void updateGameInDatabase(Game gameToUpdate) throws DataAccessException{}
 
     /**
-     *
+     * Removes a single game from the database.
+     * @param gameToRemove
+     * @throws DataAccessException
      */
-    void updateGame(){}
+    void removeGameFromDatabase(Game gameToRemove) throws DataAccessException{}
 
     /**
-     *
+     * Remove all games from the database.
+     * @throws DataAccessException
      */
-    void remove(){}
-
-    /**
-     *
-     */
-    void clear(){}
+    void clearGamesInDatabase() throws DataAccessException{}
 }

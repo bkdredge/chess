@@ -2,52 +2,60 @@ package dataAccess;
 
 import model.User;
 
+import java.util.Collection;
+
 public class UserDAO {
-    /**
-     * A user, represented in the data access object.
-     */
-    User user = null;
 
     /**
-     *
-     * @param newUser
+     * A method for inserting a user into the database.
+     * @param newUserInDatabase
      * @throws DataAccessException
      */
-    void createUser(User newUser) throws DataAccessException {
-        user=newUser;
+    void insertUserIntoDatabase(User newUserInDatabase) throws DataAccessException{}
+
+    /**
+     * A method for retrieving a single user from a database with a username.
+     * @param usernameInDatabase
+     * @return user
+     * @throws DataAccessException
+     */
+    User retrieveUserFromDatabase(String usernameInDatabase) throws DataAccessException{
+        return null;
     }
-    /**
-     *
-     */
-    void insert() {}
 
     /**
-     *
+     * A method for retrieving all the users from a database.
+     * @return
+     * @throws DataAccessException
      */
-    void find(){}
+    Collection<User> retrieveAllUsersFromDatabase() throws DataAccessException{
+        return null;
+    }
 
     /**
-     *
+     * A method for assigning a user a team.
+     * @param userToAssignTeam
+     * @throws DataAccessException
      */
-    void findAll(){}
+    void assignUserTeam(User userToAssignTeam) throws DataAccessException{}
 
     /**
-     *
+     * A method for updating the user in the database.
+     * @param userInDatabase
+     * @throws DataAccessException
      */
-    void claimSpot(){}
+    void updateUserInDatabase(User userInDatabase) throws DataAccessException{}
 
     /**
-     *
+     * A method for removing a single user from the database.
+     * @param userToRemove
+     * @throws DataAccessException
      */
-    void updateGame(){}
+    void removeUserFromDatabase(User userToRemove) throws DataAccessException{}
 
     /**
-     *
+     * A method for clearing the database of all users.
+     * @throws DataAccessException
      */
-    void remove(){}
-
-    /**
-     *
-     */
-    void clear(){}
+    void clearAllUsersInDatabase() throws DataAccessException{}
 }
