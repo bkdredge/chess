@@ -3,11 +3,13 @@ package dataAccess;
 import model.User;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Data Access Object for users in the database.
  */
 public class UserDAO {
+    private static HashMap<String, HashMap<String, String>> users;
 
     /**
      * A method for inserting a user into the database.
@@ -15,6 +17,8 @@ public class UserDAO {
      * @throws DataAccessException
      */
     void insertUserIntoDatabase(User newUserInDatabase) throws DataAccessException{}
+
+
 
     /**
      * A method for retrieving a single user from a database with a username.

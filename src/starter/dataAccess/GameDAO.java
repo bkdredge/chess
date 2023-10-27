@@ -1,9 +1,13 @@
 package dataAccess;
 
 import model.Game;
-import model.User;
+import chess.ChessGame;
+import chess.ChessGameImpl;
+import dataAccess.DataAccessException;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Data Access Object for games in the database.
