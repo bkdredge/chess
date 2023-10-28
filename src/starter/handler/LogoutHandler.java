@@ -1,33 +1,31 @@
 package handler;
 
 import com.google.gson.Gson;
-import request.JoinGameRequest;
 import request.LogoutRequest;
-import result.JoinGameResult;
 import result.LogoutResult;
-import service.JoinGameService;
 import service.LogoutService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.util.Map;
 
 /**
  * A handler for logging out.
  */
-public class LogoutHandler implements Route{
-    public LogoutHandler(){}
-
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-        System.out.println(request.body());
-        Gson gson = new Gson();
-        LogoutRequest logoutRequest=gson.fromJson(request.body(), LogoutRequest.class);
-        LogoutService logoutService=new LogoutService(logoutRequest);
-        LogoutResult logoutResult=logoutService.logout(logoutRequest);
-        if(logoutResult.getMessage()==null) {response.status(200);}
-        else if(logoutResult.getMessage()=="Error: unauthorized") {response.status(401);}
-        else if(logoutResult.getMessage()=="Error: description") {response.status(500);}
-        return gson.toJson(logoutResult);
+public class LogoutHandler implements Route {
+    @Override public Object handle(Request request, Response response) {
+        LogoutRequest classRequest = new LogoutRequest(request.headers("authorization"));
+        LogoutService classService = new LogoutService();
+        LogoutResult classResult = classService.logout(classRequest);
+        if (classResult.getMessage()==null) {
+            response.status(200); return "{}";
+        } else if (classResult.getMessage()=="unauthorized") {
+            response.status(401);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
+        } else {
+            response.status(500);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
+        }
     }
 }

@@ -1,24 +1,34 @@
 package service;
 
-import request.ClearDataRequest;
+import dataAccess.*;
 import result.ClearDataResult;
+import dataAccess.DataAccessException;
+
 /**
  * The service for clearing data using a request and result.
  */
 public class ClearDataService {
-    ClearDataRequest request;
-    public ClearDataService(ClearDataRequest request) {this.request=request;}
+
     /**
      * Clears the database. Removes all users, games, and authTokens.
-     * @param request
      * @return
      */
-    public ClearDataResult clear(ClearDataRequest request) {
+    public ClearDataResult clear() {
         try {
+            var games = new GameDAO();
+            var users = new UserDAO();
+            var tokens = new AuthDAO();
 
-            return new ClearDataResult(null);
-        } catch (Exception e) {
-            return new ClearDataResult("Error: description");
+            games.clearGamesInDatabase();
+            users.clearAllUsersInDatabase();
+            tokens.clearAllTokensInDatabase();
+            return new ClearDataResult();
         }
+        catch (DataAccessException e) {
+            var response = new ClearDataResult();
+            response.setMessage(String.format("Error: %s", e.getMessage()));
+            return response;
+        }
+
     }
 }

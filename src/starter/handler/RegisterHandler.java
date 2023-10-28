@@ -1,62 +1,39 @@
 package handler;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import model.User;
-import request.JoinGameRequest;
-import request.RegisterRequest;
-import result.JoinGameResult;
-import result.RegisterResult;
-import service.JoinGameService;
+import request.*;
+import result.*;
 import service.RegisterService;
+import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A handler for registering a new user account.
  */
-public class RegisterHandler implements Route{
-    Collection<User> users=new ArrayList<User>();
-    public RegisterHandler(){}
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-        System.out.println(request.body());
-        Gson gson = new Gson();
-        RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
-        RegisterService registerService = new RegisterService(registerRequest); //need to fix
-        RegisterResult registerResult = registerService.register(registerRequest);
-        if (registerResult.getUsername() != null && registerResult.getAuthToken() != null) {
+public class RegisterHandler implements Route {
+    @Override public Object handle(Request request, Response response) {
+        RegisterRequest classRequest = new RegisterRequest(new Gson().fromJson(request.body(), Map.class));
+        RegisterService classService = new RegisterService();
+        RegisterResult classResult = classService.register(classRequest);
+        if (classResult.getMessage()==null) {
             response.status(200);
-            System.out.println("Good!");
+            var map = new HashMap<String, String>();
+            map.put("authToken", classResult.getAuthToken());
+            map.put("username", classResult.getUsername());
+            return new Gson().toJson(map);
+        } else if (classResult.getMessage()=="bad request") {
+            response.status(400);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
+        } else if (classResult.getMessage().equals("already taken")) {
+            response.status(403);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
+        } else {
+            response.status(500);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
         }
-        else if (registerResult.getMessage() == "Error: bad request") {response.status(400);}
-        else if (registerResult.getMessage() == "Error: already taken") {response.status(403);}
-        else if (registerResult.getMessage() == "Error: description") {response.status(500);}
-        return gson.toJson(registerResult);
-        // Do I use my Request and Response classes still?
-        // Do I invoke a service here? And if so, do I need to pass parameters to it?
-        // ... like username, password, email, auth token?
-        // Do I interact with DAOs here?
-                // it takes the information from the request body register request
-        /*
-        if (RegisterResponse.message() == whatevert
-            response.status(403)
-            response.set Message ("")
-            Error
-        }
-        try
-        registerreq req = gson from Json
-        service > result > userDAO dao user user(req getusername...)
-        authaToken = dao inserUser user
-        return new RegisterRes(usergetusername, authtoken get athotken)
-        else return
-        ///
-        if it has the msaage set this status code response
-         */
     }
 }

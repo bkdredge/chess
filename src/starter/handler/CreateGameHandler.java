@@ -1,31 +1,37 @@
 package handler;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import request.CreateGameRequest;
-import result.CreateGameResult;
+
+import request.*;
+import result.*;
 import service.CreateGameService;
+import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.util.Map;
 
 /**
  * A handler for creating a game.
  */
-public class CreateGameHandler implements Route{
-    public CreateGameHandler(){}
-
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-        System.out.println(request.body());
-        Gson gson=new Gson();
-        CreateGameRequest createGameRequest=gson.fromJson(request.body(),CreateGameRequest.class);
-        CreateGameService createGameService=new CreateGameService(createGameRequest);
-        CreateGameResult createGameResult=createGameService.createGame(createGameRequest);
-        if(createGameResult.getMessage()==null) {response.status(200);}
-        else if(createGameResult.getMessage()=="Error: bad request") {response.status(400);}
-        else if(createGameResult.getMessage()=="Error: authorized") {response.status(401);}
-        else {response.status(500);} //description
-        return gson.toJson(createGameResult);
+public class CreateGameHandler implements Route {
+    @Override public Object handle(Request request, Response response) {
+        String authToken = request.headers("authorization");
+        var gson = new Gson().fromJson(request.body(), Map.class);
+        CreateGameRequest classRequest = new CreateGameRequest(authToken, (String) gson.get("gameName"));
+        CreateGameService classService = new CreateGameService();
+        CreateGameResult classResult = classService.createGame(classRequest);
+        if (classResult.getMessage()==null) {
+            response.status(200);
+            return new Gson().toJson(Map.of("gameID", classResult.getGameID()));
+        } else if (classResult.getMessage()=="bad request") {
+            response.status(400);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
+        } else if (classResult.getMessage()=="unauthorized") {
+            response.status(401);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
+        } else {
+            response.status(500);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
+        }
     }
 }

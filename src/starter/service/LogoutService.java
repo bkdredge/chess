@@ -1,16 +1,15 @@
 package service;
 
+import dataAccess.AuthDAO;
 import request.LogoutRequest;
-import result.LoginResult;
 import result.LogoutResult;
-import result.RegisterResult;
+import dataAccess.DataAccessException;
 
 /**
  * The service for logging out using a request and result.
  */
 public class LogoutService {
-    LogoutRequest request;
-    public LogoutService(LogoutRequest request) {this.request=request;}
+
     /**
      * Logs out the user represented by the authToken.
      * @param request
@@ -18,10 +17,16 @@ public class LogoutService {
      */
     public LogoutResult logout(LogoutRequest request) {
         try {
-            return new LogoutResult(null);
-        } catch (Exception e) {
-            return new LogoutResult("Error: unauthorized");
-            //return new LogoutResult("Error: description");
+            var tokens = new AuthDAO();
+            tokens.removeAuthTokenFromDatabase(request.getAuthToken());
+            var response = new LogoutResult();
+            response.setMessage(null);
+            return response;
+        }
+        catch (DataAccessException e) {
+            var response = new LogoutResult();
+            response.setMessage(e.getMessage());
+            return response;
         }
     }
 }

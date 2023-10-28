@@ -1,80 +1,82 @@
 package dataAccess;
 
+import database.*;
 import model.AuthToken;
 
-import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * Data Access Object for authentication tokens in the database.
  */
 public class AuthDAO {
-    private Collection<AuthToken>authTokens = new HashSet<AuthToken>();
+    /**
+     * A temporary database object.
+     */
+    private Database databaseTemp = new Database();
+
     /**
      * A method for inserting a new authentication token into the database.
      * @param newTokenInDatabase
      * @throws DataAccessException
      */
     public void insertAuthTokenIntoDatabase(AuthToken newTokenInDatabase) throws DataAccessException {
-        authTokens.add(newTokenInDatabase);
-    }
-
-    public void insertAuthTokenIntoDatabaseManual(String token, String name) throws DataAccessException {
-        authTokens.add(new AuthToken(token,name));
+        String username = newTokenInDatabase.getUsername();
+        String authToken = newTokenInDatabase.getAuthToken();
+        if (isAuthTokenUserNull(authToken, username) || isAuthTokenUserEmpty(authToken, username)) {
+            throw new DataAccessException("authToken and username must not by null or empty.");
+        }
+        if (isAuthTokenInDatabase(authToken)) {
+            throw new DataAccessException("Cannot have duplicate authTokens.");
+        }
+        databaseTemp.createAuthTokenInDatabase(new AuthToken(authToken, username));
     }
 
     /**
-     * A method for retrieving an authentication token from a database with a username.
-     * @param username
-     * @return null
+     * A method for retrieving an authentication token from a database with an authToken.
+     * @param authToken
      * @throws DataAccessException
      */
-    public AuthToken retrieveAuthTokenFromDatabaseUser(String username) throws DataAccessException {
-        for(var token:authTokens) {
-            if(token.getUsername()==username) {
-                return token;
-            }
-        }
-        return null;
-    }
-
     public AuthToken retrieveAuthTokenFromDatabase(String authToken) throws DataAccessException {
-        for(var token:authTokens) {
-            if(token.getAuthToken()==authToken) {
-                return token;
-            }
+        if (isAuthTokenNull(authToken) || isAuthTokenEmpty(authToken)) {
+            throw new DataAccessException("authToken can't be empty or null.");
         }
-        return null;
-    }
-
-    /**
-     * A method for retrieving all authentication tokens from a database.
-     * @return null
-     * @throws DataAccessException
-     */
-    public Collection<AuthToken> retrieveAllTokensFromDatabase() throws DataAccessException{
-        return authTokens;
+        return databaseTemp.readAuthTokenInDatabase(authToken);
     }
 
     /**
      * A method for removing an authentication token from a database with a username.
-     * @param username
-     * @return null
+     * @param authToken
      * @throws DataAccessException
      */
-    public void removeAuthTokenFromDatabase(String username) throws DataAccessException {
-        for(var token:authTokens) {
-            if(token.getUsername()==username) {
-                authTokens.remove(token);
-            }
+    public void removeAuthTokenFromDatabase(String authToken) throws DataAccessException {
+        if (isAuthTokenNull(authToken) || isAuthTokenEmpty(authToken)) {
+            throw new DataAccessException("authToken can't be null or empty.");
         }
+        if (!isAuthTokenInDatabase(authToken)) {
+            throw new DataAccessException("unauthorized");
+        }
+        databaseTemp.deleteAuthTokenFromDatabase(authToken);
     }
 
     /**
      * A method for clearing all authentication tokens in a database.
-     * @return null
      * @throws DataAccessException
      */
-    public void clearAllTokensInDatabase() throws DataAccessException{authTokens.clear();}
-
+    public void clearAllTokensInDatabase() {
+        databaseTemp.clearAuthTokensInDatabase();
+    }
+    public boolean isAuthTokenInDatabase(String authToken) {
+        return databaseTemp.readAuthTokenInDatabase(authToken) != null;
+    }
+    public boolean isAuthTokenNull(String authToken) {
+        return authToken == null;
+    }
+    public boolean isAuthTokenEmpty(String authToken) {
+        return authToken.isEmpty();
+    }
+    public boolean isAuthTokenUserNull(String authToken, String username) {
+        return (isAuthTokenNull(authToken) || (username == null));
+    }
+    public boolean isAuthTokenUserEmpty(String authToken, String username) {
+        return (isAuthTokenNull(authToken) || (username.isEmpty()));
+    }
 }

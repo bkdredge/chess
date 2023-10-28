@@ -1,27 +1,34 @@
 package dataAccess;
 
+import database.*;
 import model.User;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Data Access Object for users in the database.
  */
 public class UserDAO {
-    private Collection<User> users = new HashSet<User>();
+    /**
+     * A temporary database object.
+     */
+    private Database databaseTemp = new Database();
 
     /**
      * A method for inserting a user into the database.
      * @param newUserInDatabase
      * @throws DataAccessException
      */
-    public void insertUserIntoDatabase(User newUserInDatabase) throws DataAccessException{
-        users.add(newUserInDatabase);
+    public void insertUserIntoDatabase(User newUserInDatabase) throws DataAccessException {
+        String username = newUserInDatabase.getUsername();
+        String password = newUserInDatabase.getPassword();
+        String email = newUserInDatabase.getEmail();
+        if (isUsernamePasswordEmailNull(username, password, email) || isUsernamePasswordEmailEmpty(username, password, email)) {
+            throw new DataAccessException("bad request");
+        }
+        if (isUserInDatabase(username)) {
+            throw new DataAccessException("already taken");
+        }
+        databaseTemp.createUserInDatabase(new User(username, password, email));
     }
-
-
 
     /**
      * A method for retrieving a single user from a database with a username.
@@ -29,69 +36,63 @@ public class UserDAO {
      * @return user
      * @throws DataAccessException
      */
-    public User retrieveUserFromDatabase(String usernameInDatabase) throws DataAccessException{
-        for(var user:users) {
-            if(user.getUsername()==usernameInDatabase) {
-                return user;
-            }
+    public User retrieveUserFromDatabase(String usernameInDatabase) throws DataAccessException {
+        if (isUserNull(usernameInDatabase) || isUserEmpty(usernameInDatabase)) {
+            throw new DataAccessException("username can't be null or empty.");
         }
-        return null;
-    }
-
-    /**
-     * A method for retrieving all the users from a database.
-     * @return
-     * @throws DataAccessException
-     */
-    public Collection<User> retrieveAllUsersFromDatabase() throws DataAccessException{
-        return users;
-    }
-
-    /**
-     * A method for assigning a user a team.
-     * @param userToAssignTeam
-     * @throws DataAccessException
-     */
-    /*
-    public void assignUserTeam(User userToAssignTeam) throws DataAccessException{
-        for(var user:users) {
-            if(user.getUsername()== userToAssignTeam.getUsername()) {
-
-            }
+        if (!isUserInDatabase(usernameInDatabase)) {
+            throw new DataAccessException("unauthorized");
         }
+        return databaseTemp.readUserInDatabase(usernameInDatabase);
     }
-
-     */
 
     /**
      * A method for updating the user in the database.
-     * @param userInDatabase
+     * @param username
+     * @param password
+     * @param email
      * @throws DataAccessException
      */
-    public void updateUserInDatabase(User userInDatabase) throws DataAccessException{
-        for(var user:users) {
-            if(user.getUsername()== userInDatabase.getUsername()) {
-                user=userInDatabase;
-            }
+    public void updateUserInDatabase(String username, String password, String email) throws DataAccessException {
+        if (isUsernamePasswordEmailNull(username, password, email) || isUsernamePasswordEmailEmpty(username, password, email)) {
+            throw new DataAccessException("Must provide a username, password and email.");
+        }
+        if (!isUserInDatabase(username)) {
+            throw new DataAccessException("This user isn't in the DB.");
+        }
+        else {
+            databaseTemp.updateUserInDatabase(new User(username, password, email));
         }
     }
 
     /**
      * A method for removing a single user from the database.
-     * @param userToRemove
+     * @param userToRemoveUsername (username of user to remove)
      * @throws DataAccessException
      */
-    public void removeUserFromDatabase(User userToRemove) throws DataAccessException{
-        for(var user:users) {
-            if(user.getUsername()== userToRemove.getUsername()) {
-                users.remove(user);
-            }
+    public void removeUserFromDatabase(String userToRemoveUsername) throws DataAccessException{
+        if (isUserNull(userToRemoveUsername) || isUserEmpty(userToRemoveUsername)) {
+            throw new DataAccessException("username can't be null or empty.");
         }
+        databaseTemp.deleteUserFromDatabase(userToRemoveUsername);
     }
 
-    /**
-     * A method for clearing the database of all users.
-     * @throws DataAccessException
-     */
-    public void clearAllUsersInDatabase() throws DataAccessException{users.clear();}
+    public void clearAllUsersInDatabase() {
+        databaseTemp.clearUsersInDatabase();
+    }
+    public boolean isUserInDatabase(String username) {
+        return databaseTemp.readUserInDatabase(username) != null;
+    }
+    public boolean isUserNull(String username) {
+        return username == null;
+    }
+    public boolean isUserEmpty(String username) {
+        return username.isEmpty();
+    }
+    public boolean isUsernamePasswordEmailNull(String username, String password, String email) {
+        return (isUserNull(username) || (password == null) || (email == null));
+    }
+    public boolean isUsernamePasswordEmailEmpty(String username, String password, String email) {
+        return (isUserEmpty(username) || (password.isEmpty()) || (email.isEmpty()));
+    }
 }

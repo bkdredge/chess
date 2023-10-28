@@ -1,13 +1,16 @@
 package service;
 
+import dataAccess.AuthDAO;
+import dataAccess.GameDAO;
 import request.JoinGameRequest;
 import result.JoinGameResult;
+import dataAccess.DataAccessException;
+
 /**
  * The service for joining a game using a request and result.
  */
 public class JoinGameService {
-    JoinGameRequest request;
-    public JoinGameService(JoinGameRequest request) {this.request=request;}
+
     /**
      * 	Verifies that the specified game exists,
      * 	and, if a color is specified,
@@ -19,13 +22,40 @@ public class JoinGameService {
      */
     public JoinGameResult joinGame(JoinGameRequest request) {
         try {
-            // request header for user
-            return new JoinGameResult(request.getPlayerColor(),request.getGameID(),null);
-        } catch (Exception e) {
-            //return new JoinGameResult(null,0,"Error: bad request"); //400
-            //return new JoinGameResult(null,0,"Error: unauthorized"); //401
-            //return new JoinGameResult(null,0,"Error: already taken"); //403
-            return new JoinGameResult(null,0,"Error: description"); //500
+            var tokens = new AuthDAO(); var games = new GameDAO();
+            if (!tokens.isAuthTokenInDatabase(request.getAuthToken())) {
+                throw new DataAccessException("unauthorized");
+            }
+            var username = tokens.retrieveAuthTokenFromDatabase(request.getAuthToken()).getUsername();
+            if (!games.isGameInDatabase(request.getGameID())) {
+                throw new DataAccessException("bad request");
+            }
+            var game = games.retrieveGameFromDatabase(request.getGameID());
+            if (request.getColor()!=null) {
+                if (request.getColor().equals("WHITE")) {
+                    if (game.getWhiteUsername() != null) {
+                        throw new DataAccessException("already taken");
+                    } else {
+                        game.setWhiteUsername(username);
+                        games.updateGameInDatabase(game);
+                    }
+                } else if (request.getColor().equals("BLACK")) {
+                    if (game.getBlackUsername() != null) {
+                        throw new DataAccessException("already taken");
+                    } else {
+                        game.setBlackUsername(username);
+                        games.updateGameInDatabase(game);
+                    }
+                }
+            }
+            var response = new JoinGameResult();
+            response.setMessage(null);
+            return response;
+        }
+        catch (DataAccessException e){
+            var response = new JoinGameResult();
+            response.setMessage(e.getMessage());
+            return response;
         }
     }
 }

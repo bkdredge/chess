@@ -1,16 +1,33 @@
 package request;
-import chess.ChessGame;
-import model.Game;
 
 /**
  * The request to join a game.
  */
 public class JoinGameRequest {
-    private ChessGame.TeamColor playerColor;
+    private String authToken;
+    private String color;
     private int gameID;
-    public JoinGameRequest(){}
-    public int getGameID(){return gameID;}
-    void setGameID(int gameID){this.gameID=gameID;}
-    public ChessGame.TeamColor getPlayerColor() {return playerColor;}
-    public void setPlayerColor(ChessGame.TeamColor playerColor) {this.playerColor = playerColor;}
+    public JoinGameRequest(String authToken, String color, int gameID) {
+        setAuthToken(authToken);
+        setColor(color);
+        setGameID(gameID);
+    }
+    public String getAuthToken() {
+        return authToken;
+    }
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+    public int getGameID() {
+        return gameID;
+    }
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
+    }
 }

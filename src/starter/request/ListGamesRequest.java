@@ -1,12 +1,18 @@
 package request;
-import model.Game;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * The request to list all the games in the database.
  */
 public class ListGamesRequest {
-    public ListGamesRequest(){}
+    private String authToken;
+    public ListGamesRequest(String authToken) {
+        setAuthToken(authToken);
+    }
+    public String getAuthToken() {
+        return authToken;
+    }
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
 }

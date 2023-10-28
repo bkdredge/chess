@@ -1,30 +1,24 @@
 package handler;
 import com.google.gson.Gson;
-import request.ClearDataRequest;
 import result.ClearDataResult;
 import service.ClearDataService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import dataAccess.*;
 
-import server.Server;
+import java.util.Map;
 /**
  * A handler for clearing data.
  */
-public class ClearDataHandler implements Route{
-    public ClearDataHandler(){}
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-        System.out.println(request.body());
-        Gson gson=new Gson();
-        ClearDataRequest clearDataRequest=gson.fromJson(request.body(), ClearDataRequest.class);
-        ClearDataService clearDataService=new ClearDataService(clearDataRequest);
-        ClearDataResult clearDataResult=clearDataService.clear(clearDataRequest);
-        if(clearDataResult.getMessage()==null) {
-            response.status(200);
+public class ClearDataHandler implements Route {
+    @Override public Object handle(Request request, Response response) {
+        ClearDataService classService = new ClearDataService();
+        ClearDataResult classResult = classService.clear();
+        if (classResult.getMessage() != null) {
+            response.status(500);
+            return new Gson().toJson(Map.of("message", String.format("Error: " + classResult.getMessage())));
+        } else {
+            response.status(200); return "{}";
         }
-        else {response.status(500);}
-        return gson.toJson(clearDataResult);
     }
 }

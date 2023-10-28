@@ -1,20 +1,19 @@
 package dataAccess;
 
+import database.Database;
 import model.Game;
 import chess.ChessGame;
-import chess.ChessGameImpl;
-import dataAccess.DataAccessException;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Data Access Object for games in the database.
  */
 public class GameDAO {
-    private Collection<Game>games = new HashSet<Game>();
+    /**
+     * A temporary database object.
+     */
+    private Database databaseTemp = new Database();
 
     /**
      * A method for inserting a name game into the database.
@@ -22,22 +21,27 @@ public class GameDAO {
      * @throws DataAccessException
      */
     public void insertGameIntoDatabase(Game game) throws DataAccessException {
-        games.add(game);
+        if (!isGameInDatabase(game.getGameID())) {
+            databaseTemp.createGameInDatabase(game);
+        }
+        else {
+            throw new DataAccessException("A game with this ID already exists.");
+        }
     }
 
     /**
      * A method for retrieving a single game from the database,
-     * from a gameID (String)
+     * from a gameID (int)
      * @param gameID
      * @throws DataAccessException
      */
-    public Game retrieveGameFromDatabase(int gameID) throws DataAccessException{
-        for(var game:games) {
-            if(game.getGameID()==gameID) {
-                return game;
-            }
+    public Game retrieveGameFromDatabase(int gameID) throws DataAccessException {
+        if (databaseTemp.readGameInDatabase(gameID) == null) {
+            throw new DataAccessException("No game exists with this ID.");
         }
-        return null;
+        else {
+            return databaseTemp.readGameInDatabase(gameID);
+        }
     }
 
     /**
@@ -45,8 +49,8 @@ public class GameDAO {
      * This is in the form of a collection of games.
      * @throws DataAccessException
      */
-    public Collection<Game> retrieveAllGamesFromDatabase() throws DataAccessException{
-        return games;
+    public ArrayList<Game> retrieveAllGamesFromDatabase() throws DataAccessException {
+        return databaseTemp.readAllGamesInDatabase();
     }
 
     /**
@@ -55,19 +59,38 @@ public class GameDAO {
      * and the player is saved as either the
      * whitePlayer or blackPlayer in the database.
      * @param username
+     * @param gameID
+     * @param color
      * @throws DataAccessException
      */
-    public void assignTeamInGame(String username, int gameID, String color) throws DataAccessException{
-        for(var game:games) {
-            if (game.getGameID()==gameID) {
-                if(color=="BLACK") {
-                    game.setBlackUsername(username);
-                } else if (color=="WHITE") {
-                    game.setWhiteUsername(username);
-                }
+    public void assignTeamInGame(String username, Integer gameID, ChessGame.TeamColor color) throws DataAccessException {
+        var gameInfo = databaseTemp.readGameInDatabase(gameID);
+        if (gameInfo == null) {
+            throw new DataAccessException("Trying to join a game that doesn't exist");
+        }
+        else if (color == ChessGame.TeamColor.WHITE) {
+            if (gameInfo.getWhiteUsername() == null) {
+                // make user white
+                gameInfo.setWhiteUsername(username);
+                databaseTemp.updateGameInDatabase(gameInfo);
+            }
+            else {
+                // throw DAE
+                throw new DataAccessException("White's taken.");
             }
         }
-    } // claimSpot
+        else {
+            if (gameInfo.getBlackUsername() == null) {
+                // make user black
+                gameInfo.setBlackUsername(username);
+                databaseTemp.updateGameInDatabase(gameInfo);
+            }
+            else {
+                // throw DAE
+                throw new DataAccessException("Black's taken.");
+            }
+        }
+    }
 
     /**
      * Updates a game,
@@ -76,24 +99,21 @@ public class GameDAO {
      * @param gameToUpdate
      * @throws DataAccessException
      */
-    public void updateGameInDatabase(Game gameToUpdate) throws DataAccessException{
-        for(var game:games) {
-            if (game.getGameID()==gameToUpdate.getGameID()) {
-                game=gameToUpdate;
-            }
-        }
+    public void updateGameInDatabase(Game gameToUpdate) throws DataAccessException {
+        databaseTemp.updateGameInDatabase(gameToUpdate);
     }
 
     /**
      * Removes a single game from the database.
-     * @param gameToRemove
+     * @param gameID
      * @throws DataAccessException
      */
-    public void removeGameFromDatabase(Game gameToRemove) throws DataAccessException{
-        for(var game:games) {
-            if (game.getGameID()==gameToRemove.getGameID()) {
-                games.remove(game);
-            }
+    public void removeGameFromDatabase(Integer gameID) throws DataAccessException {
+        if (!isGameInDatabase(gameID)) {
+            throw new DataAccessException("No game corresponds to this gameID");
+        }
+        else {
+            databaseTemp.deleteGameFromDatabase(gameID);
         }
     }
 
@@ -101,5 +121,16 @@ public class GameDAO {
      * Remove all games from the database.
      * @throws DataAccessException
      */
-    public void clearGamesInDatabase() throws DataAccessException{games.clear();}
+    public void clearGamesInDatabase() throws DataAccessException {
+        databaseTemp.clearGamesInDatabase();
+    }
+
+    public boolean isGameInDatabase(Integer gameID) {
+        if (noGamesInDatabase()) {return false;}
+        else { return databaseTemp.readGameInDatabase(gameID) != null; }
+    }
+
+    public boolean noGamesInDatabase() {
+        return databaseTemp.noGamesInDatabase();
+    }
 }

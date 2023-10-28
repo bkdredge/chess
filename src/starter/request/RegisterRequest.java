@@ -1,20 +1,33 @@
 package request;
-import model.AuthToken;
+
+import java.util.Map;
 
 /**
  * The request to register a new user account.
  */
 public class RegisterRequest {
-    private String username;
-    private String password;
-    private String authToken;
-
-    public String getUsername() {return username;}
-    public void setUsername(String username) {this.username = username;}
-    public String getPassword() {return password;}
-    public void setPassword(String password) {this.password = password;}
-    public String getAuthToken() {return authToken;}
-    public void setAuthToken(String authToken) {this.authToken = authToken;}
-    public RegisterRequest(){}
-    AuthToken returnAuthToken(){return null;}
+    private String username, password, email;
+    public RegisterRequest(Map<String, String> body) {
+        setUsername(body.get("username"));
+        setEmail(body.get("email"));
+        setPassword(body.get("password"));
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public String getEmail() {
+        return email;
+    }
 }
