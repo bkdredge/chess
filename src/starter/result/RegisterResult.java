@@ -19,12 +19,12 @@ public class RegisterResult {
     public RegisterResult(String username, String authToken, String message){
         this.username = username;
         this.authToken = authToken;
-        this.message = message;
+
+        if(this.username!=null & this.authToken!=null) this.message=null;
+        else{this.message="Error: bad request";}
         // 200 for success plus username and auth
     }
-    public RegisterResult(String message){
-        //failure
-    }
+    //public RegisterResult(String message){this.message = message;}
     public String getMessage() {return message;}
     public void setMessage(String message) {
         this.message = message;

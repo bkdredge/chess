@@ -8,6 +8,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+
 /**
  * A handler for creating a game.
  */
@@ -16,6 +17,15 @@ public class CreateGameHandler implements Route{
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        return null;
+        System.out.println(request.body());
+        Gson gson=new Gson();
+        CreateGameRequest createGameRequest=gson.fromJson(request.body(),CreateGameRequest.class);
+        CreateGameService createGameService=new CreateGameService(createGameRequest);
+        CreateGameResult createGameResult=createGameService.createGame(createGameRequest);
+        if(createGameResult.getMessage()==null) {response.status(200);}
+        else if(createGameResult.getMessage()=="Error: bad request") {response.status(400);}
+        else if(createGameResult.getMessage()=="Error: authorized") {response.status(401);}
+        else {response.status(500);} //description
+        return gson.toJson(createGameResult);
     }
 }

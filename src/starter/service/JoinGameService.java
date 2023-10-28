@@ -6,6 +6,8 @@ import result.JoinGameResult;
  * The service for joining a game using a request and result.
  */
 public class JoinGameService {
+    JoinGameRequest request;
+    public JoinGameService(JoinGameRequest request) {this.request=request;}
     /**
      * 	Verifies that the specified game exists,
      * 	and, if a color is specified,
@@ -16,6 +18,14 @@ public class JoinGameService {
      * @return
      */
     public JoinGameResult joinGame(JoinGameRequest request) {
-        return null;
+        try {
+            // request header for user
+            return new JoinGameResult(request.getPlayerColor(),request.getGameID(),null);
+        } catch (Exception e) {
+            //return new JoinGameResult(null,0,"Error: bad request"); //400
+            //return new JoinGameResult(null,0,"Error: unauthorized"); //401
+            //return new JoinGameResult(null,0,"Error: already taken"); //403
+            return new JoinGameResult(null,0,"Error: description"); //500
+        }
     }
 }

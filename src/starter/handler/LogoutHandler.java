@@ -11,6 +11,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+
 /**
  * A handler for logging out.
  */
@@ -19,6 +20,14 @@ public class LogoutHandler implements Route{
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        return null;
+        System.out.println(request.body());
+        Gson gson = new Gson();
+        LogoutRequest logoutRequest=gson.fromJson(request.body(), LogoutRequest.class);
+        LogoutService logoutService=new LogoutService(logoutRequest);
+        LogoutResult logoutResult=logoutService.logout(logoutRequest);
+        if(logoutResult.getMessage()==null) {response.status(200);}
+        else if(logoutResult.getMessage()=="Error: unauthorized") {response.status(401);}
+        else if(logoutResult.getMessage()=="Error: description") {response.status(500);}
+        return gson.toJson(logoutResult);
     }
 }

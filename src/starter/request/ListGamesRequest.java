@@ -1,5 +1,7 @@
 package request;
 import model.Game;
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -7,5 +9,4 @@ import java.util.Collection;
  */
 public class ListGamesRequest {
     public ListGamesRequest(){}
-    public Collection<Game> returnGames(){return null;}
 }

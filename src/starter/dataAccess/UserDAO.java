@@ -4,19 +4,22 @@ import model.User;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Data Access Object for users in the database.
  */
 public class UserDAO {
-    private static HashMap<String, HashMap<String, String>> users;
+    private Collection<User> users = new HashSet<User>();
 
     /**
      * A method for inserting a user into the database.
      * @param newUserInDatabase
      * @throws DataAccessException
      */
-    void insertUserIntoDatabase(User newUserInDatabase) throws DataAccessException{}
+    public void insertUserIntoDatabase(User newUserInDatabase) throws DataAccessException{
+        users.add(newUserInDatabase);
+    }
 
 
 
@@ -26,7 +29,12 @@ public class UserDAO {
      * @return user
      * @throws DataAccessException
      */
-    User retrieveUserFromDatabase(String usernameInDatabase) throws DataAccessException{
+    public User retrieveUserFromDatabase(String usernameInDatabase) throws DataAccessException{
+        for(var user:users) {
+            if(user.getUsername()==usernameInDatabase) {
+                return user;
+            }
+        }
         return null;
     }
 
@@ -35,8 +43,8 @@ public class UserDAO {
      * @return
      * @throws DataAccessException
      */
-    Collection<User> retrieveAllUsersFromDatabase() throws DataAccessException{
-        return null;
+    public Collection<User> retrieveAllUsersFromDatabase() throws DataAccessException{
+        return users;
     }
 
     /**
@@ -44,25 +52,46 @@ public class UserDAO {
      * @param userToAssignTeam
      * @throws DataAccessException
      */
-    void assignUserTeam(User userToAssignTeam) throws DataAccessException{}
+    /*
+    public void assignUserTeam(User userToAssignTeam) throws DataAccessException{
+        for(var user:users) {
+            if(user.getUsername()== userToAssignTeam.getUsername()) {
+
+            }
+        }
+    }
+
+     */
 
     /**
      * A method for updating the user in the database.
      * @param userInDatabase
      * @throws DataAccessException
      */
-    void updateUserInDatabase(User userInDatabase) throws DataAccessException{}
+    public void updateUserInDatabase(User userInDatabase) throws DataAccessException{
+        for(var user:users) {
+            if(user.getUsername()== userInDatabase.getUsername()) {
+                user=userInDatabase;
+            }
+        }
+    }
 
     /**
      * A method for removing a single user from the database.
      * @param userToRemove
      * @throws DataAccessException
      */
-    void removeUserFromDatabase(User userToRemove) throws DataAccessException{}
+    public void removeUserFromDatabase(User userToRemove) throws DataAccessException{
+        for(var user:users) {
+            if(user.getUsername()== userToRemove.getUsername()) {
+                users.remove(user);
+            }
+        }
+    }
 
     /**
      * A method for clearing the database of all users.
      * @throws DataAccessException
      */
-    void clearAllUsersInDatabase() throws DataAccessException{}
+    public void clearAllUsersInDatabase() throws DataAccessException{users.clear();}
 }

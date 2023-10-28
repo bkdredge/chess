@@ -8,6 +8,5 @@ import model.Game;
 public class CreateGameRequest {
     String gameName;
     public CreateGameRequest(){}
-    Game returnGame(){return null;}
-    String getGameName(){return null;}
+    public String getGameName(){return gameName;}
 }

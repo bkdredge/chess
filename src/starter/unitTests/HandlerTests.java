@@ -8,4 +8,5 @@ import org.junit.jupiter.api.Test;
  * Unit tests for handlers
  */
 public class HandlerTests {
+
 }

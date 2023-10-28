@@ -6,11 +6,11 @@ import spark.Response;
  * The result of a Create Game request.
  */
 public class CreateGameResult {
-    private int gameID;
+    private String gameName;
     private String message;
     public CreateGameResult(){}
-    public CreateGameResult(int gameID, String message) {
-        this.gameID = gameID;
+    public CreateGameResult(String gameName, String message) {
+        this.gameName = gameName;
         this.message = message;
     }
 
@@ -18,11 +18,8 @@ public class CreateGameResult {
     public void setMessage(String message) {
         this.message = message;
     }
-    public int getGameID() {
-        return gameID;
+    public String getGame() {
+        return gameName;
     }
 
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
-    }
 }

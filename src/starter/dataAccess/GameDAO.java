@@ -8,18 +8,22 @@ import dataAccess.DataAccessException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Data Access Object for games in the database.
  */
 public class GameDAO {
+    private Collection<Game>games = new HashSet<Game>();
 
     /**
      * A method for inserting a name game into the database.
      * @param game
      * @throws DataAccessException
      */
-    void insertGameIntoDatabase(Game game) throws DataAccessException {}
+    public void insertGameIntoDatabase(Game game) throws DataAccessException {
+        games.add(game);
+    }
 
     /**
      * A method for retrieving a single game from the database,
@@ -27,7 +31,12 @@ public class GameDAO {
      * @param gameID
      * @throws DataAccessException
      */
-    Game retrieveGameFromDatabase(String gameID) throws DataAccessException{
+    public Game retrieveGameFromDatabase(int gameID) throws DataAccessException{
+        for(var game:games) {
+            if(game.getGameID()==gameID) {
+                return game;
+            }
+        }
         return null;
     }
 
@@ -36,8 +45,8 @@ public class GameDAO {
      * This is in the form of a collection of games.
      * @throws DataAccessException
      */
-    Collection<Game> retrieveAllGamesFromDatabase() throws DataAccessException{
-        return null;
+    public Collection<Game> retrieveAllGamesFromDatabase() throws DataAccessException{
+        return games;
     }
 
     /**
@@ -48,7 +57,17 @@ public class GameDAO {
      * @param username
      * @throws DataAccessException
      */
-    void assignTeamInGame(String username) throws DataAccessException{} // claimSpot
+    public void assignTeamInGame(String username, int gameID, String color) throws DataAccessException{
+        for(var game:games) {
+            if (game.getGameID()==gameID) {
+                if(color=="BLACK") {
+                    game.setBlackUsername(username);
+                } else if (color=="WHITE") {
+                    game.setWhiteUsername(username);
+                }
+            }
+        }
+    } // claimSpot
 
     /**
      * Updates a game,
@@ -57,18 +76,30 @@ public class GameDAO {
      * @param gameToUpdate
      * @throws DataAccessException
      */
-    void updateGameInDatabase(Game gameToUpdate) throws DataAccessException{}
+    public void updateGameInDatabase(Game gameToUpdate) throws DataAccessException{
+        for(var game:games) {
+            if (game.getGameID()==gameToUpdate.getGameID()) {
+                game=gameToUpdate;
+            }
+        }
+    }
 
     /**
      * Removes a single game from the database.
      * @param gameToRemove
      * @throws DataAccessException
      */
-    void removeGameFromDatabase(Game gameToRemove) throws DataAccessException{}
+    public void removeGameFromDatabase(Game gameToRemove) throws DataAccessException{
+        for(var game:games) {
+            if (game.getGameID()==gameToRemove.getGameID()) {
+                games.remove(game);
+            }
+        }
+    }
 
     /**
      * Remove all games from the database.
      * @throws DataAccessException
      */
-    void clearGamesInDatabase() throws DataAccessException{}
+    public void clearGamesInDatabase() throws DataAccessException{games.clear();}
 }
