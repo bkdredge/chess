@@ -23,7 +23,7 @@ public class ListGamesHandler implements Route {
         ListGamesRequest listGamesRequest=gson.fromJson(request.body(),ListGamesRequest.class);
         ListGamesService listGamesService=new ListGamesService(listGamesRequest);
         ListGamesResult listGamesResult=listGamesService.listGames(listGamesRequest);
-        if(listGamesResult.getGames()!=null) {response.status(200);}
+        if(listGamesResult.getMessage()==null) {response.status(200);}
         else if(listGamesResult.getMessage()=="Error: unauthorized") response.status(401);
         else if(listGamesResult.getMessage()=="Error: description") response.status(500);
         return gson.toJson(listGamesResult);
