@@ -22,8 +22,10 @@ public class RegisterService {
      */
     public RegisterResult register(RegisterRequest request) {
         try {
+            // Call instances of the user and auth token data transfer object.
             var userDao = new UserDAO(); var authDao = new AuthDAO();
 
+            // Insert a user into the database, 
             userDao.insertUserIntoDatabase(new User(request.getUsername(), request.getPassword(), request.getEmail()));
             var authTokenString = UUID.randomUUID().toString();
             var authToken = new AuthToken(authTokenString, request.getUsername());

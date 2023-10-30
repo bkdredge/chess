@@ -11,7 +11,7 @@ import dataAccess.DataAccessException;
  * The service for creating a game using a request and result.
  */
 public class CreateGameService {
-    private static int IDCounter = 1;
+    public static int IDCounter = 1;
 
     /**
      * Creates a new game.
