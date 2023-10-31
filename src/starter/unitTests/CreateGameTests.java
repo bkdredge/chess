@@ -19,6 +19,8 @@ public class CreateGameTests extends BasicFunctions{
         var gameResult = this.createAGame("token not working", "Barbenheimer");
         assertEquals(gameResult.getMessage(), "unauthorized");
     }
+    // could check that there was an auth token that got sent
+    // could check that the username is the same 
 
     @Test
     void clearData() {

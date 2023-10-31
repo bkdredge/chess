@@ -6,7 +6,20 @@ import java.util.Map;
  * The request to register a new user account.
  */
 public class RegisterRequest {
-    private String username, password, email;
+    /**
+     * A string to store a username
+     */
+    private String username;
+
+    /**
+     * A string to store a password
+     */
+    private String password;
+
+    /**
+     * A string to store an email
+     */
+    private String email;
     public RegisterRequest(Map<String, String> body) {
         setUsername(body.get("username"));
         setEmail(body.get("email"));

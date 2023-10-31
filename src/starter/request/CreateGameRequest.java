@@ -4,7 +4,15 @@ package request;
  * The request to create a game.
  */
 public class CreateGameRequest {
+
+    /**
+     * A string to store an auth token
+     */
     private String authToken;
+
+    /**
+     * A string to store a game name
+     */
     private String gameName;
     public CreateGameRequest(String authToken, String gameName) {
         setAuthToken(authToken);

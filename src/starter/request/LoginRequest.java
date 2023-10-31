@@ -6,7 +6,15 @@ import java.util.Map;
  * The request to log in.
  */
 public class LoginRequest {
+
+    /**
+     * A string to store a username
+     */
     private String username;
+
+    /**
+     * A string to store a password
+     */
     private String password;
     public LoginRequest(Map<String, String> body) {
         setUsername(body.get("username"));

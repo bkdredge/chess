@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RegisterTests extends BasicFunctions{
     @Test
-    void registerUser() { //"Barbie","bonbons","barbie@gmail.com
+    void registerUser() {
         this.clearDatabase();
 
         var registerResult = this.registerUser("Barbie","bonbons","barbie@gmail.com");

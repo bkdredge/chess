@@ -15,17 +15,22 @@ public class ClearDataService {
      */
     public ClearDataResult clear() {
         try {
-            var games = new GameDAO();
-            var users = new UserDAO();
-            var tokens = new AuthDAO();
+            // create instances of all DAOs
+            GameDAO games = new GameDAO();
+            UserDAO users = new UserDAO();
+            AuthDAO tokens = new AuthDAO();
 
+            // clear each DAO
             games.clearGamesInDatabase();
             users.clearAllUsersInDatabase();
             tokens.clearAllTokensInDatabase();
+
+            // return result
             return new ClearDataResult();
         }
         catch (DataAccessException e) {
-            var response = new ClearDataResult();
+            // catch and return error
+            ClearDataResult response = new ClearDataResult();
             response.setMessage(String.format("Error: %s", e.getMessage()));
             return response;
         }

@@ -16,9 +16,14 @@ import java.util.Map;
  */
 public class RegisterHandler implements Route {
     @Override public Object handle(Request request, Response response) {
+        // deserialize the Spark request to create a new request object
         RegisterRequest classRequest = new RegisterRequest(new Gson().fromJson(request.body(), Map.class));
+
+        // create a result object using a new service object and the request
         RegisterService classService = new RegisterService();
         RegisterResult classResult = classService.register(classRequest);
+
+        // set the response code according to the message set by the service
         if (classResult.getMessage()==null) {
             response.status(200);
             var map = new HashMap<String, String>();

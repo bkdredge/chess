@@ -17,14 +17,20 @@ public class LogoutService {
      */
     public LogoutResult logout(LogoutRequest request) {
         try {
-            var tokens = new AuthDAO();
+            // create new instance of the AuthDAO class
+            AuthDAO tokens = new AuthDAO();
+
+            // remove the token from the auth token DAO which matches that of the request
             tokens.removeAuthTokenFromDatabase(request.getAuthToken());
-            var response = new LogoutResult();
+
+            // return the response with the message set to null (success)
+            LogoutResult response = new LogoutResult();
             response.setMessage(null);
             return response;
         }
         catch (DataAccessException e) {
-            var response = new LogoutResult();
+            // return the response with the corresponding error message
+            LogoutResult response = new LogoutResult();
             response.setMessage(e.getMessage());
             return response;
         }

@@ -22,16 +22,17 @@ public class RegisterService {
      */
     public RegisterResult register(RegisterRequest request) {
         try {
-            // Call instances of the user and auth token data transfer object.
+            // call instances of the user and auth token data transfer object.
             var userDao = new UserDAO(); var authDao = new AuthDAO();
 
-            // Insert a user into the database, 
+            // insert a user into the database
             userDao.insertUserIntoDatabase(new User(request.getUsername(), request.getPassword(), request.getEmail()));
             var authTokenString = UUID.randomUUID().toString();
             var authToken = new AuthToken(authTokenString, request.getUsername());
             authDao.insertAuthTokenIntoDatabase(authToken);
 
-            var response = new RegisterResult();
+            // return the response with the message set to null (success)
+            RegisterResult response = new RegisterResult();
             response.setUsername(request.getUsername());
             response.setAuthToken(authTokenString);
             response.setMessage(null);
@@ -39,7 +40,8 @@ public class RegisterService {
             return response;
         }
         catch (DataAccessException e) {
-            var response = new RegisterResult();
+            // return the response with the corresponding error message
+            RegisterResult response = new RegisterResult();
             response.setMessage(e.getMessage());
             return response;
         }

@@ -18,6 +18,7 @@ public class Server {
     }
 
     private void run(int number) {
+        // access the local host port number at the static file location
         Spark.port(number);
         Spark.externalStaticFileLocation("web");
 

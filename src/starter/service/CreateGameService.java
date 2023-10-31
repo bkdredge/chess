@@ -20,25 +20,42 @@ public class CreateGameService {
      */
     public CreateGameResult createGame(CreateGameRequest request) {
         try {
-            var tokens = new AuthDAO(); var games = new GameDAO();
+            // create instances of DAOs for auth tokens and games
+            AuthDAO tokens = new AuthDAO(); GameDAO games = new GameDAO();
+
+            // check if the token from the request is in the auth token DAO
             if (!tokens.isAuthTokenInDatabase(request.getAuthToken())) {
+                // if not, throw an "unauthorized" error
                 throw new DataAccessException("unauthorized");
             }
+            // create a game object
             Game game = new Game();
+
+            // check if the name from the game request is empty/null
             if ((request.getGameName() == null) || (request.getGameName().isEmpty())) {
+                // if so, throw "bad request" error
                 throw new DataAccessException("bad request");
             }
+
+            // set name of game to the game name from the request
             game.setGameName(request.getGameName());
+
+            // set ID of game to the current count of the static game ID counter
             game.setGameID(IDCounter);
+
+            // insert game into the game DAO
             games.insertGameIntoDatabase(game);
-            var response = new CreateGameResult();
+
+            // return the response with the message set to null (success) and the gameID set to the request's gameID
+            CreateGameResult response = new CreateGameResult();
             response.setGameID(IDCounter);
-            response.setMessage(null);
-            IDCounter++;
+            response.setMessage(null); //success
+            IDCounter++; //increase the ID counter for the next game
             return response;
         }
         catch (DataAccessException e){
-            var response = new CreateGameResult();
+            // return response with error
+            CreateGameResult response = new CreateGameResult();
             response.setMessage(e.getMessage());
             return response;
         }

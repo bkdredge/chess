@@ -13,7 +13,7 @@ public class ChessPieceImplRulesKnight implements ChessPieceImplRules {
         return populatePieceRules((ChessPositionImpl) position, (ChessBoardImpl) board);
     }
     public Collection<ChessMove> populatePieceRules(ChessPositionImpl position, ChessBoardImpl board) {
-        knightMoves.clear(); knightBoard =(ChessBoardImpl)board; knightPosition = position;
+        knightMoves.clear(); knightBoard =board; knightPosition = position;
         ChessPiece piece = knightBoard.getPiece(knightPosition);
         if(piece.getPieceType()!=ChessPiece.PieceType.KNIGHT){
             System.out.println("No knight found."); return null;

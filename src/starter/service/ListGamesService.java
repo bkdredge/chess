@@ -23,12 +23,23 @@ public class ListGamesService {
      */
     public ListGamesResult listGames(ListGamesRequest request) {
         try {
-            var tokens = new AuthDAO(); var games = new GameDAO();
+            // create new instance of AuthDAO and GameDAO classes
+            AuthDAO tokens = new AuthDAO(); var games = new GameDAO();
+
+            // check if the auth token from the request is in the auth DAO
             if (!tokens.isAuthTokenInDatabase(request.getAuthToken())) {
+                // if not, throw unauthorized error
                 throw new DataAccessException("unauthorized");
             }
-            var allGames = games.retrieveAllGamesFromDatabase();
-            var listOfGames = new ArrayList<HashMap<String, Object>>();
+
+            // create an object (Collection) from all of the games in the DAO
+            ArrayList<Game> allGames = games.retrieveAllGamesFromDatabase();
+
+            // create an array list of hashmaps of strings and objects from the array list of games
+            ArrayList<HashMap<String, Object>> listOfGames = new ArrayList<HashMap<String, Object>>();
+
+            // for each game in the array list, add the corresponding information to the hashmaps;
+            //   these will display properly
             for (Game game: allGames) {
                 var gameInfo = new HashMap<String, Object>();
                 gameInfo.put("gameID", game.getGameID());
@@ -37,13 +48,16 @@ public class ListGamesService {
                 gameInfo.put("gameName", game.getGameName());
                 listOfGames.add(gameInfo);
             }
-            var response = new ListGamesResult();
+
+            // return the response with the message set to null (success)
+            ListGamesResult response = new ListGamesResult();
             response.setGames(listOfGames);
             response.setMessage(null);
             return response;
         }
         catch (DataAccessException e) {
-            var response = new ListGamesResult();
+            // return the response with the corresponding error message
+            ListGamesResult response = new ListGamesResult();
             response.setMessage(e.getMessage());
             return response;
         }

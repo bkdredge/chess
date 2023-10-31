@@ -4,8 +4,20 @@ package request;
  * The request to join a game.
  */
 public class JoinGameRequest {
+
+    /**
+     * A string to store an auth token
+     */
     private String authToken;
+
+    /**
+     * A string to store the team color
+     */
     private String color;
+
+    /**
+     * An integer to store a game ID
+     */
     private int gameID;
     public JoinGameRequest(String authToken, String color, int gameID) {
         setAuthToken(authToken);

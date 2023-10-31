@@ -3,6 +3,7 @@ package service;
 import dataAccess.AuthDAO;
 import dataAccess.UserDAO;
 import model.AuthToken;
+import model.User;
 import request.LoginRequest;
 import result.LoginResult;
 import dataAccess.DataAccessException;
@@ -21,16 +22,30 @@ public class LoginService {
      */
     public LoginResult login(LoginRequest request) {
         try {
-            var users = new UserDAO(); var tokens = new AuthDAO();
-            var user = users.retrieveUserFromDatabase(request.getUsername());
-            if (!user.getPassword().equals(request.getPassword())) {
+            // create new instance of userDAO and AuthDAO classes
+            UserDAO users = new UserDAO(); AuthDAO tokens = new AuthDAO();
+
+            // retrieve the user from the database whose username matches that of the request
+            User user = users.retrieveUserFromDatabase(request.getUsername());
+
+            // check if the password from the user matches that of the request
+            if (user.getPassword()!=request.getPassword()) {
+
+                // if not, throw an "unauthorized" error
                 throw new DataAccessException("unauthorized");
             }
-            var authTokenString = UUID.randomUUID().toString();
-            var authToken = new AuthToken(authTokenString, request.getUsername());
+
+            // create a new auth token string
+            String authTokenString = UUID.randomUUID().toString();
+
+            // create a new auth token from the string and from the username
+            AuthToken authToken = new AuthToken(authTokenString, request.getUsername());
+
+            // insert it into the database
             tokens.insertAuthTokenIntoDatabase(authToken);
 
-            var response = new LoginResult();
+            // return the response with the message set to null (success)
+            LoginResult response = new LoginResult();
             response.setUsername(request.getUsername());
             response.setAuthToken(authTokenString);
             response.setMessage(null);
@@ -38,7 +53,8 @@ public class LoginService {
             return response;
         }
         catch (DataAccessException e) {
-            var response = new LoginResult();
+            // return the response with the corresponding error message
+            LoginResult response = new LoginResult();
             response.setMessage(e.getMessage());
             return response;
         }

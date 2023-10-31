@@ -15,9 +15,14 @@ import java.util.Map;
  */
 public class LogoutHandler implements Route {
     @Override public Object handle(Request request, Response response) {
+        // extract the auth token from the Spark request to create a new request object
         LogoutRequest classRequest = new LogoutRequest(request.headers("authorization"));
+
+        // create a result object using a new service object and the request
         LogoutService classService = new LogoutService();
         LogoutResult classResult = classService.logout(classRequest);
+
+        // set the response code according to the message set by the service
         if (classResult.getMessage()==null) {
             response.status(200); return "{}";
         } else if (classResult.getMessage()=="unauthorized") {
