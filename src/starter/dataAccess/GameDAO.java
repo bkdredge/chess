@@ -1,6 +1,6 @@
 package dataAccess;
 
-import database.Database;
+import database.*;
 import model.Game;
 import chess.ChessGame;
 
@@ -13,7 +13,7 @@ public class GameDAO {
     /**
      * A temporary database object.
      */
-    private Database databaseTemp = new Database();
+    private Database database = new MySQLDatabase();
 
     /**
      * A method for inserting a name game into the database.
@@ -22,7 +22,7 @@ public class GameDAO {
      */
     public void insertGameIntoDatabase(Game game) throws DataAccessException {
         if (!isGameInDatabase(game.getGameID())) {
-            databaseTemp.createGameInDatabase(game);
+            database.createGameInDatabase(game);
         }
         else {
             throw new DataAccessException("A game with this ID already exists.");
@@ -36,11 +36,11 @@ public class GameDAO {
      * @throws DataAccessException
      */
     public Game retrieveGameFromDatabase(int gameID) throws DataAccessException {
-        if (databaseTemp.readGameInDatabase(gameID) == null) {
+        if (database.readGameInDatabase(gameID) == null) {
             throw new DataAccessException("No game exists with this ID.");
         }
         else {
-            return databaseTemp.readGameInDatabase(gameID);
+            return database.readGameInDatabase(gameID);
         }
     }
 
@@ -50,7 +50,7 @@ public class GameDAO {
      * @throws DataAccessException
      */
     public ArrayList<Game> retrieveAllGamesFromDatabase() throws DataAccessException {
-        return databaseTemp.readAllGamesInDatabase();
+        return database.readAllGamesInDatabase();
     }
 
     /**
@@ -64,7 +64,7 @@ public class GameDAO {
      * @throws DataAccessException
      */
     public void assignTeamInGame(String username, Integer gameID, ChessGame.TeamColor color) throws DataAccessException {
-        var gameInfo = databaseTemp.readGameInDatabase(gameID);
+        var gameInfo = database.readGameInDatabase(gameID);
         if (gameInfo == null) {
             throw new DataAccessException("Trying to join a game that doesn't exist");
         }
@@ -72,7 +72,7 @@ public class GameDAO {
             if (gameInfo.getWhiteUsername() == null) {
                 // make user white
                 gameInfo.setWhiteUsername(username);
-                databaseTemp.updateGameInDatabase(gameInfo);
+                database.updateGameInDatabase(gameInfo);
             }
             else {
                 // throw DAE
@@ -83,7 +83,7 @@ public class GameDAO {
             if (gameInfo.getBlackUsername() == null) {
                 // make user black
                 gameInfo.setBlackUsername(username);
-                databaseTemp.updateGameInDatabase(gameInfo);
+                database.updateGameInDatabase(gameInfo);
             }
             else {
                 // throw DAE
@@ -100,7 +100,7 @@ public class GameDAO {
      * @throws DataAccessException
      */
     public void updateGameInDatabase(Game gameToUpdate) throws DataAccessException {
-        databaseTemp.updateGameInDatabase(gameToUpdate);
+        database.updateGameInDatabase(gameToUpdate);
     }
 
     /**
@@ -113,7 +113,7 @@ public class GameDAO {
             throw new DataAccessException("No game corresponds to this gameID");
         }
         else {
-            databaseTemp.deleteGameFromDatabase(gameID);
+            database.deleteGameFromDatabase(gameID);
         }
     }
 
@@ -122,15 +122,15 @@ public class GameDAO {
      * @throws DataAccessException
      */
     public void clearGamesInDatabase() throws DataAccessException {
-        databaseTemp.clearGamesInDatabase();
+        database.clearGamesInDatabase();
     }
 
     public boolean isGameInDatabase(Integer gameID) {
         if (noGamesInDatabase()) {return false;}
-        else { return databaseTemp.readGameInDatabase(gameID) != null; }
+        else { return database.readGameInDatabase(gameID) != null; }
     }
 
     public boolean noGamesInDatabase() {
-        return databaseTemp.noGamesInDatabase();
+        return database.noGamesInDatabase();
     }
 }

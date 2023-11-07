@@ -29,7 +29,7 @@ public class LoginService {
             User user = users.retrieveUserFromDatabase(request.getUsername());
 
             // check if the password from the user matches that of the request
-            if (user.getPassword()!=request.getPassword()) {
+            if (!user.getPassword().equals(request.getPassword())) {
 
                 // if not, throw an "unauthorized" error
                 throw new DataAccessException("unauthorized");

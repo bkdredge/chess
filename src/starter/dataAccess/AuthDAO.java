@@ -3,6 +3,8 @@ package dataAccess;
 import database.*;
 import model.AuthToken;
 
+import java.sql.Connection;
+
 
 /**
  * Data Access Object for authentication tokens in the database.
@@ -11,7 +13,7 @@ public class AuthDAO {
     /**
      * A temporary database object.
      */
-    private Database databaseTemp = new Database();
+    private Database database = new MySQLDatabase();
 
     /**
      * A method for inserting a new authentication token into the database.
@@ -27,7 +29,7 @@ public class AuthDAO {
         if (isAuthTokenInDatabase(authToken)) {
             throw new DataAccessException("Cannot have duplicate authTokens.");
         }
-        databaseTemp.createAuthTokenInDatabase(new AuthToken(authToken, username));
+        database.createAuthTokenInDatabase(new AuthToken(authToken, username));
     }
 
     /**
@@ -39,7 +41,7 @@ public class AuthDAO {
         if (isAuthTokenNull(authToken) || isAuthTokenEmpty(authToken)) {
             throw new DataAccessException("authToken can't be empty or null.");
         }
-        return databaseTemp.readAuthTokenInDatabase(authToken);
+        return database.readAuthTokenInDatabase(authToken);
     }
 
     /**
@@ -54,7 +56,7 @@ public class AuthDAO {
         if (!isAuthTokenInDatabase(authToken)) {
             throw new DataAccessException("unauthorized");
         }
-        databaseTemp.deleteAuthTokenFromDatabase(authToken);
+        database.deleteAuthTokenFromDatabase(authToken);
     }
 
     /**
@@ -62,10 +64,10 @@ public class AuthDAO {
      * @throws DataAccessException
      */
     public void clearAllTokensInDatabase() {
-        databaseTemp.clearAuthTokensInDatabase();
+        database.clearAuthTokensInDatabase();
     }
     public boolean isAuthTokenInDatabase(String authToken) {
-        return databaseTemp.readAuthTokenInDatabase(authToken) != null;
+        return database.readAuthTokenInDatabase(authToken) != null;
     }
     public boolean isAuthTokenNull(String authToken) {
         return authToken == null;

@@ -25,7 +25,7 @@ public class BasicFunctions {
 
             // reset ID counter
             var reset = new CreateGameService();
-            reset.IDCounter=0;
+            //FIXME reset.IDCounter=0;
         }
         catch (DataAccessException e) {
 
@@ -34,9 +34,9 @@ public class BasicFunctions {
         }
     }
 
-    public _Result createAGame(String authToken, String gameID) {
-        // return result of request, given a token and gameID
-        var createGameRequest = new CreateGameRequest(authToken, gameID);
+    public _Result createAGame(String authToken, String gameName) {
+        // return result of request, given a token and gameName
+        var createGameRequest = new CreateGameRequest(authToken, gameName);
         var createGameService = new CreateGameService();
         return createGameService.createGame(createGameRequest);
     }

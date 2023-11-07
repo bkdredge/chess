@@ -11,7 +11,7 @@ import dataAccess.DataAccessException;
  * The service for creating a game using a request and result.
  */
 public class CreateGameService {
-    public static int IDCounter = 1;
+    //FIXME public static int IDCounter = 1;
 
     /**
      * Creates a new game.
@@ -41,16 +41,16 @@ public class CreateGameService {
             game.setGameName(request.getGameName());
 
             // set ID of game to the current count of the static game ID counter
-            game.setGameID(IDCounter);
+            //FIXME game.setGameID(IDCounter);
 
             // insert game into the game DAO
             games.insertGameIntoDatabase(game);
 
             // return the response with the message set to null (success) and the gameID set to the request's gameID
             CreateGameResult response = new CreateGameResult();
-            response.setGameID(IDCounter);
+            //FIXME response.setGameID(IDCounter);
             response.setMessage(null); //success
-            IDCounter++; //increase the ID counter for the next game
+            //FIXME IDCounter++; //increase the ID counter for the next game
             return response;
         }
         catch (DataAccessException e){

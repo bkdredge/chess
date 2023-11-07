@@ -57,9 +57,7 @@ public class Game {
     public void setGameID(int gameID) {
         this.gameID = gameID;
     }
-    public String getWhiteUsername() {
-        return whiteUsername;
-    }
+    public String getWhiteUsername() {return whiteUsername;}
     public void setWhiteUsername(String whiteUsername) {
         this.whiteUsername = whiteUsername;
     }

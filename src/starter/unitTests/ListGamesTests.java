@@ -4,16 +4,17 @@ import org.junit.jupiter.api.Test;
 import result.RegisterResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ListGamesTests extends BasicFunctions {
     @Test
     void listGames() {
         var result = ((RegisterResult)this.registerUser("Barbie", "bonbons", "barbie@gmail.com"));
         var gameResult = this.createAGame(result.getAuthToken(), "gameName");
-        assertEquals(gameResult.getMessage(), null); //success
+        assertNull(gameResult.getMessage()); //success
 
         var listGameRes = this.listGames(result.getAuthToken());
-        assertEquals(listGameRes.getMessage(), null); //success
+        assertNull(listGameRes.getMessage()); //success
 
     }
 
@@ -21,7 +22,7 @@ public class ListGamesTests extends BasicFunctions {
     void listGamesBadAuth() {
         var result = ((RegisterResult)this.registerUser("Oppenheimer", "bombs", "oppenheimer@gmail.com"));
         var listGameRes = this.listGames("token not working");
-        assertEquals(listGameRes.getMessage(), "unauthorized");
+        assertEquals("unauthorized", listGameRes.getMessage());
     }
 
     @Test

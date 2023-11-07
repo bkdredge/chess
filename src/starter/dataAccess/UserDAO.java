@@ -10,7 +10,7 @@ public class UserDAO {
     /**
      * A temporary database object.
      */
-    private Database databaseTemp = new Database();
+    private Database database = new MySQLDatabase();
 
     /**
      * A method for inserting a user into the database.
@@ -27,7 +27,7 @@ public class UserDAO {
         if (isUserInDatabase(username)) {
             throw new DataAccessException("already taken");
         }
-        databaseTemp.createUserInDatabase(new User(username, password, email));
+        database.createUserInDatabase(new User(username, password, email));
     }
 
     /**
@@ -43,7 +43,7 @@ public class UserDAO {
         if (!isUserInDatabase(usernameInDatabase)) {
             throw new DataAccessException("unauthorized");
         }
-        return databaseTemp.readUserInDatabase(usernameInDatabase);
+        return database.readUserInDatabase(usernameInDatabase);
     }
 
     /**
@@ -61,7 +61,7 @@ public class UserDAO {
             throw new DataAccessException("This user isn't in the DB.");
         }
         else {
-            databaseTemp.updateUserInDatabase(new User(username, password, email));
+            database.updateUserInDatabase(new User(username, password, email));
         }
     }
 
@@ -74,14 +74,14 @@ public class UserDAO {
         if (isUserNull(userToRemoveUsername) || isUserEmpty(userToRemoveUsername)) {
             throw new DataAccessException("username can't be null or empty.");
         }
-        databaseTemp.deleteUserFromDatabase(userToRemoveUsername);
+        database.deleteUserFromDatabase(userToRemoveUsername);
     }
 
     public void clearAllUsersInDatabase() {
-        databaseTemp.clearUsersInDatabase();
+        database.clearUsersInDatabase();
     }
     public boolean isUserInDatabase(String username) {
-        return databaseTemp.readUserInDatabase(username) != null;
+        return database.readUserInDatabase(username) != null;
     }
     public boolean isUserNull(String username) {
         return username == null;

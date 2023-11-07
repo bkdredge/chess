@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import result.LoginResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class LogoutTests extends BasicFunctions{
     @BeforeEach
@@ -16,25 +17,25 @@ public class LogoutTests extends BasicFunctions{
     @Test
     void testLogout() {
         var registerResult = this.registerUser("Barbie", "bonbons", "barbie@gmail.com");
-        assertEquals(registerResult.getMessage(), null); //success
+        assertNull(registerResult.getMessage()); //success
 
         var loginResult = this.loginUser("Barbie","bonbons");
-        assertEquals(loginResult.getMessage(), null); //success
+        assertNull(loginResult.getMessage()); //success
 
         var logoutResult = this.logoutUser(((LoginResult) loginResult).getAuthToken()); // using same auth token
-        assertEquals(logoutResult.getMessage(), null); //success
+        assertNull(logoutResult.getMessage()); //success
     }
 
     @Test
     void testLogoutIncorrectToken() {
         var registerResult = this.registerUser("Barbie", "bonbons", "barbie@gmail.com");
-        assertEquals(registerResult.getMessage(), null); //success
+        assertNull(registerResult.getMessage()); //success
 
         var loginResult = this.loginUser("Barbie","bonbons");
-        assertEquals(loginResult.getMessage(), null); //success
+        assertNull(loginResult.getMessage()); //success
 
         var logoutResult = this.logoutUser("weird token"); // using different auth token
-        assertEquals(logoutResult.getMessage(), "unauthorized");
+        assertEquals("unauthorized", logoutResult.getMessage());
     }
 
     @Test

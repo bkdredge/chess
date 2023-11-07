@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class LoginTests extends BasicFunctions{
     @BeforeEach
@@ -15,28 +16,28 @@ public class LoginTests extends BasicFunctions{
     @Test
     void testLogin() {
         var regRes = this.registerUser("Barbie", "bonbons", "barbie@gmail.com");
-        assertEquals(regRes.getMessage(), null); //success
+        assertNull(regRes.getMessage()); //success
 
         var loginRes = this.loginUser("Barbie", "bonbons");
-        assertEquals(loginRes.getMessage(), null); //success
+        assertNull(loginRes.getMessage()); //success
     }
 
     @Test
     void testLoginWrongPassword() {
         var regRes = this.registerUser("Barbie", "bonbons", "barbie@gmail.com");
-        assertEquals(regRes.getMessage(), null); //success
+        assertNull(regRes.getMessage()); //success
 
         var loginRes = this.loginUser("Barbie", "ILoveKen");
-        assertEquals(loginRes.getMessage(), "unauthorized");
+        assertEquals("unauthorized",loginRes.getMessage());
     }
 
     @Test
     void testLoginNoPassword() {
         var regRes = this.registerUser("Barbie", "bonbons", "barbie@gmail.com");
-        assertEquals(regRes.getMessage(), null); //success
+        assertNull(regRes.getMessage()); //success
 
         var loginRes = this.loginUser("Oppenheimer", "bombs");
-        assertEquals(loginRes.getMessage(), "unauthorized");
+        assertEquals("unauthorized", loginRes.getMessage());
     }
 
     @Test

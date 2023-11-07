@@ -40,13 +40,15 @@ public class ListGamesService {
 
             // for each game in the array list, add the corresponding information to the hashmaps;
             //   these will display properly
-            for (Game game: allGames) {
-                var gameInfo = new HashMap<String, Object>();
-                gameInfo.put("gameID", game.getGameID());
-                gameInfo.put("whiteUsername",game.getWhiteUsername());
-                gameInfo.put("blackUsername",game.getBlackUsername());
-                gameInfo.put("gameName", game.getGameName());
-                listOfGames.add(gameInfo);
+            if(allGames.size()>0 || allGames!=null || !allGames.isEmpty()) {
+                for (Game game: allGames) {
+                    var gameInfo = new HashMap<String, Object>();
+                    gameInfo.put("gameID", game.getGameID());
+                    gameInfo.put("whiteUsername",game.getWhiteUsername());
+                    gameInfo.put("blackUsername",game.getBlackUsername());
+                    gameInfo.put("gameName", game.getGameName());
+                    listOfGames.add(gameInfo);
+                }
             }
 
             // return the response with the message set to null (success)
