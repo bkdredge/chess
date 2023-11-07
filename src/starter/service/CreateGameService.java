@@ -46,10 +46,17 @@ public class CreateGameService {
             // insert game into the game DAO
             games.insertGameIntoDatabase(game);
 
+            for(var g:games.retrieveAllGamesFromDatabase()) {
+                if(g.getGameName().equals(game.getGameName())) {
+                    game.setGameID(g.getGameID());
+                }
+            }
+
             // return the response with the message set to null (success) and the gameID set to the request's gameID
             CreateGameResult response = new CreateGameResult();
             //FIXME response.setGameID(IDCounter);
             response.setMessage(null); //success
+            response.setGameID(game.getGameID());
             //FIXME IDCounter++; //increase the ID counter for the next game
             return response;
         }

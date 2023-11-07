@@ -64,10 +64,8 @@ public class MySQLDatabase implements Database {
         try (var conn = dbAccess.getConnection()) {
             conn.setCatalog("chess");
             try (var preparedStatement = conn.prepareStatement("INSERT INTO game " +
-                    //FIXME "(gameID, whiteUsername, blackUsername, gameName, game) VALUES(?, ?, ?, ?, ?)",
                     "(whiteUsername, blackUsername, gameName, game) VALUES(?, ?, ?, ?)",
                     RETURN_GENERATED_KEYS)) {
-                //FIXME preparedStatement.setInt(1, game.getGameID());
                 preparedStatement.setString(1, game.getWhiteUsername()); //2 ...
                 preparedStatement.setString(2, game.getBlackUsername());
                 preparedStatement.setString(3, game.getGameName());

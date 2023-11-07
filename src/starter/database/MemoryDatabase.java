@@ -79,35 +79,19 @@ public class MemoryDatabase implements Database{
     }
 
     //DELETE
-    public void deleteGameFromDatabase(Integer gameID) {
-        games.remove(gameID);
-    }
-    public void deleteAuthTokenFromDatabase(String authToken) {
-        authTokens.remove(authToken);
-    }
+    public void deleteGameFromDatabase(Integer gameID) {games.remove(gameID);}
+    public void deleteAuthTokenFromDatabase(String authToken) {authTokens.remove(authToken);}
     public void deleteUserFromDatabase(String username) {users.remove(username);}
 
     //CLEAR
-    public void clearGamesInDatabase() {
-        if (games != null) {games.clear();}
-    }
-    public void clearUsersInDatabase() {
-        if (users != null) {users.clear();}
-    }
-    public void clearAuthTokensInDatabase() {
-        if (authTokens != null) {authTokens.clear();}
-    }
+    public void clearGamesInDatabase() {if (games != null) {games.clear();}}
+    public void clearUsersInDatabase() {if (users != null) {users.clear();}}
+    public void clearAuthTokensInDatabase() {if (authTokens != null) {authTokens.clear();}}
 
     //EMPTY
-    public boolean noGamesInDatabase() {
-        return games.isEmpty();
-    }
-    public boolean noUsersInDatabase() {
-        return users.isEmpty();
-    }
-    public boolean noAuthInDatabase() {
-        return authTokens.isEmpty();
-    }
+    public boolean noGamesInDatabase() {return games.isEmpty();}
+    public boolean noUsersInDatabase() {return users.isEmpty();}
+    public boolean noAuthInDatabase() {return authTokens.isEmpty();}
 
 
 }

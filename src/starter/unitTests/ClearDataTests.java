@@ -22,7 +22,6 @@ public class ClearDataTests extends BasicFunctions{
         game.setWhiteUsername("Barbie");
         game.setBlackUsername("Oppenheimer");
         game.setGame(new ChessGameImpl());
-        game.setGameID(2023);
 
         try {
             gameDao.insertGameIntoDatabase(game);
@@ -31,11 +30,11 @@ public class ClearDataTests extends BasicFunctions{
             System.out.println("Server error.");
         }
 
-        assertTrue(gameDao.isGameInDatabase(2023), "No game was written into the DB.");
+        assertTrue(gameDao.isGameInDatabase(1), "No game was written into the DB.");
 
         var clearService = new ClearDataService();
         var clearResult = clearService.clear();
 
-        assertFalse(gameDao.isGameInDatabase(2023), "The clear DB function didn't work properly.");
+        assertFalse(gameDao.isGameInDatabase(1), "The clear DB function didn't work properly.");
     }
 }
