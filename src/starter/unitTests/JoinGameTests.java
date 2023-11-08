@@ -80,7 +80,7 @@ public class JoinGameTests extends BasicFunctions{
         var joinGameResult2 = ((JoinGameResult)this.joinAGame(result2.getAuthToken(), "WHITE", gameResult5.getGameID())); //same game
         assertEquals("already taken", joinGameResult2.getMessage());
 
-        this.clearDatabase();
+        //this.clearDatabase();
     }
 
     @Test

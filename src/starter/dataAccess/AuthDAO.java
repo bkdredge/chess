@@ -13,7 +13,7 @@ public class AuthDAO {
     /**
      * A temporary database object.
      */
-    private Database database = new MemoryDatabase();
+    private Database database = new MySQLDatabase();
 
     /**
      * A method for inserting a new authentication token into the database.

@@ -13,7 +13,7 @@ public class GameDAO {
     /**
      * A temporary database object.
      */
-    private Database database = new MemoryDatabase();
+    private Database database = new MySQLDatabase();
     private static int numberOfGames = 0;
 
     public Database getDatabase() {
