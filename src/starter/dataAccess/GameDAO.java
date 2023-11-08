@@ -13,7 +13,15 @@ public class GameDAO {
     /**
      * A temporary database object.
      */
-    private Database database = new MySQLDatabase();
+    private Database database = new MemoryDatabase();
+    private static int numberOfGames = 0;
+
+    public Database getDatabase() {
+        return database;
+    }
+    public void incrementNumberOfGames() {numberOfGames++;}
+    public void resetNumberOfGames() {numberOfGames=0;}
+    public int getNumberOfGames() {return numberOfGames;}
 
     /**
      * A method for inserting a name game into the database.
@@ -23,6 +31,7 @@ public class GameDAO {
     public void insertGameIntoDatabase(Game game) throws DataAccessException {
         if (!isGameInDatabase(game.getGameID())) {
             database.createGameInDatabase(game);
+            incrementNumberOfGames();
         }
         else {
             throw new DataAccessException("A game with this ID already exists.");
@@ -123,6 +132,7 @@ public class GameDAO {
      */
     public void clearGamesInDatabase() throws DataAccessException {
         database.clearGamesInDatabase();
+        resetNumberOfGames();
     }
 
     public boolean isGameInDatabase(Integer gameID) {

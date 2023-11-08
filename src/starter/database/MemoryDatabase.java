@@ -92,6 +92,4 @@ public class MemoryDatabase implements Database{
     public boolean noGamesInDatabase() {return games.isEmpty();}
     public boolean noUsersInDatabase() {return users.isEmpty();}
     public boolean noAuthInDatabase() {return authTokens.isEmpty();}
-
-
 }

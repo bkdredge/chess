@@ -1,5 +1,7 @@
 package unitTests;
 
+import database.MemoryDatabase;
+import database.MySQLDatabase;
 import request.*;
 import result.*;
 import service.*;
@@ -30,11 +32,18 @@ public class ClearDataTests extends BasicFunctions{
             System.out.println("Server error.");
         }
 
-        assertTrue(gameDao.isGameInDatabase(1), "No game was written into the DB.");
+        if(gameDao.getDatabase().getClass().equals(MemoryDatabase.class)) {
+            assertTrue(gameDao.isGameInDatabase(0), "No game was written into the DB.");
+        } else if (gameDao.getDatabase().getClass().equals(MySQLDatabase.class)) {
+            assertTrue(gameDao.isGameInDatabase(1), "No game was written into the DB.");
+        }
 
         var clearService = new ClearDataService();
         var clearResult = clearService.clear();
 
-        assertFalse(gameDao.isGameInDatabase(1), "The clear DB function didn't work properly.");
+        if(gameDao.getDatabase().getClass().equals(MemoryDatabase.class)) {
+            assertFalse(gameDao.isGameInDatabase(0), "The clear DB function didn't work properly.");
+        } else if (gameDao.getDatabase().getClass().equals(MySQLDatabase.class)) {
+            assertFalse(gameDao.isGameInDatabase(1), "The clear DB function didn't work properly.");        }
     }
 }

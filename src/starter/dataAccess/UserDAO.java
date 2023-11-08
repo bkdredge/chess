@@ -10,7 +10,7 @@ public class UserDAO {
     /**
      * A temporary database object.
      */
-    private Database database = new MySQLDatabase();
+    private Database database = new MemoryDatabase();
 
     /**
      * A method for inserting a user into the database.

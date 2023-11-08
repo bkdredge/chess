@@ -142,7 +142,7 @@ public class MySQLDatabase implements Database {
             conn.setCatalog("chess");
             try (var preparedStatement = conn.prepareStatement("SELECT * FROM game")) {
                 try (var resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
+                    while (resultSet.next()) {
                         int foundGameID = resultSet.getInt("gameID");
                         String whiteUsername = resultSet.getString("whiteUsername");
                         String blackUsername = resultSet.getString("blackUsername");

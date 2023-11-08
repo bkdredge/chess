@@ -2,6 +2,8 @@ package service;
 
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
+import database.MemoryDatabase;
+import database.MySQLDatabase;
 import model.Game;
 import request.CreateGameRequest;
 import result.CreateGameResult;
@@ -11,7 +13,6 @@ import dataAccess.DataAccessException;
  * The service for creating a game using a request and result.
  */
 public class CreateGameService {
-    //FIXME public static int IDCounter = 1;
 
     /**
      * Creates a new game.
@@ -39,25 +40,15 @@ public class CreateGameService {
 
             // set name of game to the game name from the request
             game.setGameName(request.getGameName());
-
-            // set ID of game to the current count of the static game ID counter
-            //FIXME game.setGameID(IDCounter);
-
+            // set gameID
+            game.setGameID(games.getNumberOfGames()+1);
             // insert game into the game DAO
             games.insertGameIntoDatabase(game);
 
-            for(var g:games.retrieveAllGamesFromDatabase()) {
-                if(g.getGameName().equals(game.getGameName())) {
-                    game.setGameID(g.getGameID());
-                }
-            }
-
             // return the response with the message set to null (success) and the gameID set to the request's gameID
             CreateGameResult response = new CreateGameResult();
-            //FIXME response.setGameID(IDCounter);
             response.setMessage(null); //success
             response.setGameID(game.getGameID());
-            //FIXME IDCounter++; //increase the ID counter for the next game
             return response;
         }
         catch (DataAccessException e){

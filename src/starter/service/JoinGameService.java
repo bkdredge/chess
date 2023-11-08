@@ -159,6 +159,12 @@ public class JoinGameService {
             AuthDAO tokens = new AuthDAO();
             GameDAO games = new GameDAO();
 
+            // check if the game is in the database
+            if (!games.isGameInDatabase(request.getGameID())) {
+                // if not, throw bad request error
+                throw new DataAccessException("bad request");
+            }
+
             // Check if the auth token from the request is in the auth DAO
             if (!tokens.isAuthTokenInDatabase(request.getAuthToken())) {
                 // If not, throw unauthorized error
@@ -167,14 +173,6 @@ public class JoinGameService {
 
             // Create a username from the validated auth token
             String username = tokens.retrieveAuthTokenFromDatabase(request.getAuthToken()).getUsername();
-
-            // Check if the game is in the database
-            if (!games.isGameInDatabase(request.getGameID())) {
-                // If not, set the response message to null and return it
-                JoinGameResult response = new JoinGameResult();
-                response.setMessage(null); // or set it to an appropriate success message
-                return response;
-            }
 
             // Create a game
             Game game = games.retrieveGameFromDatabase(request.getGameID());

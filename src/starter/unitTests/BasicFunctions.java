@@ -24,7 +24,7 @@ public class BasicFunctions {
             users.clearAllUsersInDatabase();
 
             // reset ID counter
-            var reset = new CreateGameService();
+            //var reset = new CreateGameService();
             //FIXME reset.IDCounter=0;
         }
         catch (DataAccessException e) {
