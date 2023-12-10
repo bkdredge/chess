@@ -1,6 +1,6 @@
 package passoffTests.chessTests.chessExtraCredit;
 
-import chess.*;
+import chessStarter.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -68,6 +68,7 @@ public class CastlingTests {
                 "ChessGame validMoves did not contain valid queen-side castle move");
         Assertions.assertTrue(game.validMoves(position).contains(kingSide),
                 "ChessGame validMoves did not contain valid king-side castle move");
+
 
         //queen side castle works correctly
         Assertions.assertDoesNotThrow(() -> game.gameMove(queenSide));

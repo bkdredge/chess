@@ -1,6 +1,6 @@
 package passoffTests.chessTests;
 
-import chess.*;
+import chessStarter.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -61,7 +61,7 @@ public class ChessGameTests {
 
         game.setBoard(board);
         game.setGameTeamColor(ChessGame.TeamColor.WHITE);
-        
+
         //king
         ChessPosition kingEndPosition = TestFactory.getNewPosition(1, 1);
         game.gameMove(TestFactory.getNewMove(kingStartPosition, kingEndPosition, null));
