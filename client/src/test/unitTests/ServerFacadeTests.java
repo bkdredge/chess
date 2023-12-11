@@ -24,14 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ServerFacadeTests {
     URI uri = new URI("http://localhost:8080");
     ServerFacade server = new ServerFacade(uri);
-
-    public ServerFacadeTests() throws URISyntaxException {
-    }
-
-    @BeforeEach
-    public void clearDatabase() throws Exception {
-        server.clearDatabase();
-    }
+    public ServerFacadeTests() throws URISyntaxException {}
+    @BeforeEach public void clearDatabase() throws Exception { server.clearDatabase(); }
 
     @Test
     @DisplayName("Register New User")
@@ -42,8 +36,6 @@ public class ServerFacadeTests {
         assertNotNull(response.getAuthToken());
         assertEquals("Barbie", response.getUsername());
     }
-
-
     @Test
     @DisplayName("Register Existing User")
     public void alreadyTakenRegisterUser() throws Exception {
@@ -52,9 +44,8 @@ public class ServerFacadeTests {
         assertNull(response1.getMessage());
         RegisterRequest request2 = new RegisterRequest("Barbie", "Midge@gmail.com", "midgeWhat");
         RegisterResult response2 = server.register(request2);
-        assertEquals("Forbidden", response2.getMessage());
+        assertEquals(403, response2.getCode().code);
     }
-
     @Test
     @DisplayName("Login")
     public void successfullyLoginUser() throws Exception {
@@ -64,7 +55,6 @@ public class ServerFacadeTests {
         assertNull(response.getMessage());
         assertNotNull(response.getAuthToken());
     }
-
     @Test
     @DisplayName("Login Unauthorized User")
     public void unauthorizedLoginUser() throws Exception{
@@ -72,7 +62,6 @@ public class ServerFacadeTests {
         assertEquals(401, response.getCode().code);
         assertNull(response.getAuthToken());
     }
-
     @Test
     @DisplayName("Logout")
     public void successfullyLogoutUser() throws Exception{
@@ -83,7 +72,6 @@ public class ServerFacadeTests {
         LogoutResult logoutResponse = server.logout(logoutRequest);
         assertNull(logoutResponse.getMessage());
     }
-
     @Test
     @DisplayName("Logout Unauthorized User")
     public void unauthorizedLogoutUser() throws Exception{
@@ -92,7 +80,6 @@ public class ServerFacadeTests {
         LogoutResult response = server.logout(request);
         assertEquals(401, response.getCode().code);
     }
-
     @Test
     @DisplayName("Create New Game")
     public void successfullyCreateNewGame() throws Exception{
@@ -104,7 +91,6 @@ public class ServerFacadeTests {
         assertNull(createGameResponse.getMessage());
         assertNotNull(createGameResponse.getGameID());
     }
-
     @Test
     @DisplayName("Unauthorized To Create Game")
     public void unauthorizedCreateGame() throws Exception{
@@ -114,7 +100,6 @@ public class ServerFacadeTests {
         assertEquals(401, response.getCode().code);
         assertEquals(0,response.getGameID());
     }
-
     @Test
     @DisplayName("List Games")
     public void successfullyListGames() throws Exception{
@@ -132,7 +117,6 @@ public class ServerFacadeTests {
         assertNull(listGamesResponse.getMessage());
         assertEquals(2, listGamesResponse.getGames().size());
     }
-
     @Test
     @DisplayName("Unauthorized List Games")
     public void unauthorizedListGames() throws Exception{
@@ -142,8 +126,6 @@ public class ServerFacadeTests {
         assertEquals(401, response.getCode().code);
         assertNull(response.getGames());
     }
-
-
     @Test
     @DisplayName("Two Players Join Game")
     public void successfullyJoinGame() throws Exception{
@@ -166,7 +148,6 @@ public class ServerFacadeTests {
         assertNull(joinGameResponse1.getMessage());
         assertNull(joinGameResponse2.getMessage());
     }
-
     @Test
     @DisplayName("Unauthorized To Join Game")
     public void unauthorizedJoinGame() throws Exception{
@@ -183,8 +164,6 @@ public class ServerFacadeTests {
 
         assertEquals(401, joinGameResponse.getCode().code);
     }
-
-
     @Test
     @DisplayName("Already Taken Join Game")
     public void alreadyTakenJoinGame() throws Exception{
@@ -216,5 +195,4 @@ public class ServerFacadeTests {
         assertEquals(403, joinGameResponse3.getCode().code);
         assertEquals(403, joinGameResponse4.getCode().code);
     }
-
 }

@@ -14,10 +14,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Repl {
-    ServerFacade server;
-    State state;
-    String authToken;
-    ChessBoard board;
+    ServerFacade server; State state; String authToken; ChessBoard board;
     public Repl(URI uri){
         this.server = new ServerFacade(uri);
         this.state = State.LOGGED_OUT;
@@ -25,7 +22,6 @@ public class Repl {
         board = new ChessBoardImpl();
         board.resetBoard();
     }
-
     public void run() throws Exception{
         while (true) {
             System.out.printf("[" + state + "] >>> ");
@@ -45,7 +41,6 @@ public class Repl {
             }
         }
     }
-
     private void register(String[] args) throws Exception{
         String username = args[1];
         String password = args[2];
@@ -60,7 +55,6 @@ public class Repl {
             System.out.println(response.getMessage());
         }
     }
-
     private void login(String[] args) throws Exception{
         String username = args[1];
         String password = args[2];
@@ -122,28 +116,16 @@ public class Repl {
             System.out.println(response.getMessage());
         }
     }
-
     private void join(String[] args) throws Exception{
         //get player color
         String color = null;
-        if(args[2].equals("BLACK")){
-            color = "BLACK";
-        }
-        else if(args[2].equals("WHITE")){
-            color = "WHITE";
-        }
-        else{
-            System.out.println("No color specified. Observing game...");
-            observe(args);
-        }
+        if(args[2].equals("BLACK")){color = "BLACK";}
+        else if(args[2].equals("WHITE")){color = "WHITE";}
+        else{System.out.println("No color specified. Observing game..."); observe(args);}
         //get game id
         int gameID = -1;
-        try{
-            gameID = Integer.parseInt(args[1]);
-        }
-        catch(NumberFormatException e){
-            System.out.println("Invalid integer input");
-        }
+        try{gameID = Integer.parseInt(args[1]);}
+        catch(NumberFormatException e){System.out.println("Invalid integer input");}
         //make request + get response
         JoinGameResult response = server.joinGame(new JoinGameRequest(authToken, color, gameID));
         int status = 200;
@@ -158,13 +140,11 @@ public class Repl {
             System.out.println(response.getMessage());
         }
     }
-
     private void observe(String[] args) throws Exception{
         printBoardBlack(board);
         System.out.println();
         printBoardWhite(board);
         System.out.print("\u001b[0m");
-
 /*        int gameID;
         try{
             gameID = Integer.parseInt(args[1]);
@@ -184,14 +164,10 @@ public class Repl {
             System.out.println("Invalid integer input");
         }*/
     }
-
-
-
     private void help(){
         if(state == State.LOGGED_OUT){
             System.out.printf("register <USERNAME> <PASSWORD> <EMAIL> - to create an account%n");
             System.out.printf("login <USERNAME> <PASSWORD> - to play chess%n");
-
         }
         else{
             System.out.printf("create <NAME> - a game%n");
@@ -203,27 +179,20 @@ public class Repl {
         System.out.printf("quit - playing chess%n");
         System.out.printf("help - with possible commands%n%n");
     }
-
     private void printBoardBlack(ChessBoard board){
         int boardSize = 8;
-
-        System.out.print("\u001b[100;30;1m    h  g  f  e  d  c  b  a    \u001b[0m\n");
-
+        System.out.print("\u001b[100;37;1m    h  g  f  e  d  c  b  a    \u001b[0m\n");
         for(int i = 1; i <= boardSize; i++){
-            System.out.print("\u001b[100;30;1m " + i + " ");
+            System.out.print("\u001b[100;37;1m " + i + " ");
             for(int j = boardSize; j >= 1; j--){
-                if((i + j) % 2 == 1){
-                    System.out.print("\u001b[107m");
-                }
-                else{
-                    System.out.print("\u001b[0m");
-                }
+                if((i + j) % 2 == 1){ System.out.print("\u001b[103m"); }
+                else{ System.out.print("\u001b[43m"); }
                 ChessPositionImpl position = new ChessPositionImpl(j, i);
                 ChessPiece piece = board.getPiece(position);
                 if(piece != null){
                     ChessGame.TeamColor color = piece.getTeamColor();
                     if(color.equals(ChessGame.TeamColor.WHITE)){
-                        System.out.print("\u001b[31m");
+                        System.out.print("\u001b[97;1m");
                         switch(piece.getPieceType()){ //white
                             case KING:      System.out.print(" K "); break;
                             case QUEEN:     System.out.print(" Q "); break;
@@ -234,7 +203,7 @@ public class Repl {
                         }
                     }
                     else{
-                        System.out.print("\u001b[34m");
+                        System.out.print("\u001b[30;1m");
                         switch(piece.getPieceType()){ //black
                             case KING:      System.out.print(" k "); break;
                             case QUEEN:     System.out.print(" q "); break;
@@ -249,34 +218,25 @@ public class Repl {
                     System.out.print("   ");
                 }
             }
-            System.out.print("\u001b[100;30;1m " + i + " ");
+            System.out.print("\u001b[100;37;1m " + i + " ");
             System.out.print("\u001b[0m\n");
         }
-        System.out.print("\u001b[100;30;1m    h  g  f  e  d  c  b  a    \u001b[0m\n");
+        System.out.print("\u001b[100;37;1m    h  g  f  e  d  c  b  a    \u001b[0m\n");
     }
-
-
-
     private void printBoardWhite(ChessBoard board){
         int boardSize = 8;
-
-        System.out.print("\u001b[100;30;1m    a  b  c  d  e  f  g  h    \u001b[0m\n");
-
+        System.out.print("\u001b[100;37;1m    a  b  c  d  e  f  g  h    \u001b[0m\n");
         for(int i = boardSize; i >= 1; i--){
-            System.out.print("\u001b[100;30;1m " + i + " ");
+            System.out.print("\u001b[100;37;1m " + i + " ");
             for(int j = 1; j <= boardSize; j++){
-                if((i + j) % 2 == 1){
-                    System.out.print("\u001b[107m");
-                }
-                else{
-                    System.out.print("\u001b[0m");
-                }
+                if((i + j) % 2 == 1){ System.out.print("\u001b[103m"); }
+                else{ System.out.print("\u001b[43m"); }
                 ChessPositionImpl position = new ChessPositionImpl(j, i);
                 ChessPiece piece = board.getPiece(position);
                 if(piece != null){
                     ChessGame.TeamColor color = piece.getTeamColor();
                     if(color.equals(ChessGame.TeamColor.WHITE)){
-                        System.out.print("\u001b[31m");
+                        System.out.print("\u001b[97;1m");
                         switch(piece.getPieceType()){ //white
                             case KING:      System.out.print(" K "); break;
                             case QUEEN:     System.out.print(" Q "); break;
@@ -287,7 +247,7 @@ public class Repl {
                         }
                     }
                     else{
-                        System.out.print("\u001b[34m");
+                        System.out.print("\u001b[30;1m");
                         switch(piece.getPieceType()){ //black
                             case KING:      System.out.print(" k "); break;
                             case QUEEN:     System.out.print(" q "); break;
@@ -302,9 +262,9 @@ public class Repl {
                     System.out.print("   ");
                 }
             }
-            System.out.print("\u001b[100;30;1m " + i + " ");
+            System.out.print("\u001b[100;37;1m " + i + " ");
             System.out.print("\u001b[0m\n");
         }
-        System.out.print("\u001b[100;30;1m    a  b  c  d  e  f  g  h    \u001b[0m\n");
+        System.out.print("\u001b[100;37;1m    a  b  c  d  e  f  g  h    \u001b[0m\n");
     }
 }
